@@ -29,6 +29,14 @@ public class HelloApplication extends Application {
             System.out.println("nom: "+ klient.get_nom()+"\n"+"NISS: "+klient.get_NISS());
 
         }
+        Client d= clientDAO.find(4);
+        if(d.get_isActive()){
+            d.set_nom("prout1");
+            clientDAO.update(d);
+            d.set_adresse("dans une galaxie lointaine");
+            clientDAO.create(d);
+        }
+
 
 
         launch();
