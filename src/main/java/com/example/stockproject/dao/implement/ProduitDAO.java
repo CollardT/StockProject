@@ -77,7 +77,7 @@ public class ProduitDAO extends DAO<Produit> {
                 rs.getInt("id_produit"),
                 rs.getString("nom"),
                 rs.getInt("stock"),
-                rs.getBoolean("is_active"));
+                rs.getBoolean("isActive"));
             }
             return produit;
         }

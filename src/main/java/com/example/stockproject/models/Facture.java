@@ -5,21 +5,30 @@ import java.util.HashMap;
 
 public class Facture {
     private int _idFacture;
-    private int _idClient;
-    private int _idUtilisateur;
+    private Client _Client;
+    private Utilisateur _Utilisateur;
     private int _total;
-    private Date _date;
-    private HashMap<Produit,Integer> _produitsvendus;
 
-    public Facture(int _idFacture, int _idClient, int _idUtilisateur,HashMap<Produit,Integer> produitsvendus, int _total, Date _date) {
-        this._idFacture = _idFacture;
-        this._idClient = _idClient;
-        this._idUtilisateur = _idUtilisateur;
-        this._total = _total;
-        this._date = _date;
-        this._produitsvendus = produitsvendus;
+    public HashMap<Produit, Integer> get_produitsvendus() {
+        return _produitsvendus;
     }
 
+    public void set_produitsvendus(HashMap<Produit, Integer> _produitsvendus) {
+        this._produitsvendus = _produitsvendus;
+    }
+
+    private HashMap<Produit,Integer> _produitsvendus;
+
+    public Facture(int _idFacture, Client _Client, Utilisateur _Utilisateur,HashMap<Produit,Integer> produitsvendus, int _total) {
+        this._idFacture = _idFacture;
+        this._Client = _Client;
+        this._Utilisateur = _Utilisateur;
+        this._total = _total;
+        this._produitsvendus = produitsvendus;
+    }
+    public Facture(){
+        this._idFacture = 0;
+    }
     public int get_idFacture() {
         return _idFacture;
     }
@@ -28,21 +37,7 @@ public class Facture {
         this._idFacture = _idFacture;
     }
 
-    public int get_idClient() {
-        return _idClient;
-    }
 
-    public void set_idClient(int _idClient) {
-        this._idClient = _idClient;
-    }
-
-    public int get_idUtilisateur() {
-        return _idUtilisateur;
-    }
-
-    public void set_idUtilisateur(int _idUtilisateur) {
-        this._idUtilisateur = _idUtilisateur;
-    }
 
     public int get_total() {
         return _total;
@@ -52,11 +47,19 @@ public class Facture {
         this._total = _total;
     }
 
-    public Date get_date() {
-        return _date;
+    public Client get_Client() {
+        return _Client;
     }
 
-    public void set_date(Date _date) {
-        this._date = _date;
+    public void set_Client(Client _Client) {
+        this._Client = _Client;
+    }
+
+    public Utilisateur get_Utilisateur() {
+        return _Utilisateur;
+    }
+
+    public void set_Utilisateur(Utilisateur _Utilisateur) {
+        this._Utilisateur = _Utilisateur;
     }
 }

@@ -70,10 +70,10 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 utilisateur = new Utilisateur(
-                rs.getInt("id"),
+                rs.getInt("id_utilisateur"),
                 rs.getString("login"),
                 rs.getString("password"),
-                rs.getString("role")
+                rs.getString("permissions")
                 );
                 return utilisateur;
             }
