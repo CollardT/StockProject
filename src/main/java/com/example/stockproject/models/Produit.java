@@ -4,14 +4,15 @@ public class Produit {
     private int _idproduit;
     private String _nom;
     private int _stock;
-    private int _isActive;
+    private boolean _isActive;
 
     public Produit(int _idproduit, String _nom, int _stock) {
         this._idproduit = _idproduit;
         this._nom = _nom;
         this._stock = _stock;
+        this._isActive = true;
     }
-    public Produit(int _idproduit, String _nom, int _stock, int _isActive) {
+    public Produit(int _idproduit, String _nom, int _stock, boolean _isActive) {
         this._idproduit = _idproduit;
         this._nom = _nom;
         this._stock = _stock;
@@ -41,11 +42,11 @@ public class Produit {
         this._stock = _stock;
     }
 
-    public int is_isActive() {
+    public boolean is_isActive() {
         return _isActive;
     }
 
-    public void set_isActive(int _isActive) {
+    public void set_isActive(boolean _isActive) {
         this._isActive = _isActive;
     }
 }

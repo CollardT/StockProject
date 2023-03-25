@@ -15,6 +15,12 @@ public class ClientDAO extends DAO<Client> {
     public ClientDAO(Connection conn){
         super(conn);
     }
+
+    /**
+     * Créer un nouveau client à partir d'un objet Client
+     * @param obj : objet à créer dans la BDD
+     * @return
+     */
     @Override
     public boolean create(Client obj) {
         try {
@@ -30,21 +36,23 @@ public class ClientDAO extends DAO<Client> {
 
         }
         catch (SQLException e){
+            e.printStackTrace();
             System.out.println("Vous ne pouvez pas créer le client suivant:" + obj.get_nom());
             return false;
         }
     }
 
+    /**
+     * Met à jour un client à partir d'un objet Client en changeant la variable isActive vers false
+     * @param obj : Objet à supprimer dans la BDD
+     * @return
+     */
     @Override
     public boolean delete(Client obj) {
         try {
-            PreparedStatement state = conn.prepareStatement("UPDATE client SET nom=?, NISS=?, email=?, adresse=?, isActive=?  WHERE client.id_client = ?");
-            state.setString(1,obj.get_nom());
-            state.setString(2,obj.get_NISS());
-            state.setString(3,obj.get_email());
-            state.setString(4,obj.get_adresse());
-            state.setBoolean(5,false);
-            state.setInt(6,obj.get_idClient());
+            PreparedStatement state = conn.prepareStatement("UPDATE client isActive=?  WHERE client.id_client = ?");
+            state.setBoolean(1,false);
+            state.setInt(2,obj.get_idClient());
             state.executeUpdate();
             state.close();
             return true;
@@ -78,8 +86,8 @@ public class ClientDAO extends DAO<Client> {
     }
 
     /**
-     *
-     * @param id : index de l'élément à chercher
+     * Cherche un client par son id
+     * @param id : index du client à chercher
      * @return
      */
     @Override
@@ -99,6 +107,7 @@ public class ClientDAO extends DAO<Client> {
         return client;
     }
 
+
     public Client findbyname(String name) {
         Client client = null;
         try{
@@ -108,13 +117,19 @@ public class ClientDAO extends DAO<Client> {
             if(result.first() ) {
                 client = new Client(result.getInt("id_client"), result.getString("nom"), result.getString( "NISS"), result.getString("email"),result.getString("adresse"),result.getBoolean("isActive"));
             }
+            return client;
         }
         catch (SQLException e){
             System.out.println("Probleme de récupération du client avec le nom:"+name);
+            return null;
         }
-        return client;
+
     }
 
+    /**
+     * Récupère la liste de tous les clients
+     * @return
+     */
     @Override
     public List<Client> findall() {
         List<Client> clients = new ArrayList<>();

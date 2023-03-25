@@ -1,6 +1,7 @@
 package com.example.stockproject.models;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class Facture {
     private int _idFacture;
@@ -8,13 +9,15 @@ public class Facture {
     private int _idUtilisateur;
     private int _total;
     private Date _date;
+    private HashMap<Produit,Integer> _produitsvendus;
 
-    public Facture(int _idFacture, int _idClient, int _idUtilisateur, int _total, Date _date) {
+    public Facture(int _idFacture, int _idClient, int _idUtilisateur,HashMap<Produit,Integer> produitsvendus, int _total, Date _date) {
         this._idFacture = _idFacture;
         this._idClient = _idClient;
         this._idUtilisateur = _idUtilisateur;
         this._total = _total;
         this._date = _date;
+        this._produitsvendus = produitsvendus;
     }
 
     public int get_idFacture() {

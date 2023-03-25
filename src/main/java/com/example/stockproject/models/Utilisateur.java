@@ -15,7 +15,7 @@ public class Utilisateur {
         this._idUtilisateur = _idUtilisateur;
         this._login = _login;
         this._password = _password;
-        this._role = setPerms(_role);
+        this._role = setpermissions(_role);
     }
 
     /**
@@ -23,7 +23,7 @@ public class Utilisateur {
      * @return the role of the user
      * Uses the role in the field perms to determine what kind of user we are creating
      */
-    private permissions setPerms(String roletoparse){
+    private permissions setpermissions(String roletoparse){
         switch (roletoparse){
             case "SELLER":
                 return permissions.SELLER;
@@ -37,7 +37,9 @@ public class Utilisateur {
 
         }
     }
-
+    public String get_role() {
+        return _role.name();
+    }
     public int get_idUtilisateur() {
         return _idUtilisateur;
     }
@@ -54,7 +56,7 @@ public class Utilisateur {
         this._login = _login;
     }
 
-    private String get_password() {
+    public String get_password() {
         return _password;
     }
 
