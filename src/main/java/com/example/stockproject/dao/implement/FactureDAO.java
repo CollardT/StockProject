@@ -44,6 +44,10 @@ public class FactureDAO extends DAO<Facture> {
                         ps2.setInt(3, entry.getValue());
                         ps2.executeUpdate();
                         ps2.close();
+                        PreparedStatement ps3 = conn.prepareStatement("UPDATE produit SET stock = stock - ? WHERE id_produit =?;");
+                        ps3.setInt(1, entry.getValue());
+                        ps3.setInt(2, entry.getKey().get_idproduit());
+                        ps3.executeUpdate();
                     }
                 }
                 genkeys.close();
@@ -75,7 +79,38 @@ public class FactureDAO extends DAO<Facture> {
 
     @Override
     public boolean update(Facture obj) {
-        return false;
+        try {
+            conn.setAutoCommit(false);
+            PreparedStatement ps = conn.prepareStatement("UPDATE `facture` SET `total` =?,`id_client`=?,`id_utilisateur`=? WHERE `id_facture` =?;");
+            ps.setInt(1, obj.get_total());
+            ps.setInt(2, obj.get_Client().get_idClient());
+            ps.setInt(3, obj.get_Utilisateur().get_idUtilisateur());
+            ps.setInt(4, obj.get_idFacture());
+            ps.executeUpdate();
+            for ( Map.Entry<Produit, Integer> entry : obj.get_produitsvendus().entrySet()
+                 ) {
+                PreparedStatement ps2 = conn.prepareStatement("INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
+                ps2.setInt(1, obj.get_idFacture());
+                ps2.setInt(2, entry.getKey().get_idproduit());
+                ps2.setInt(3, entry.getValue());
+                ps2.executeUpdate();
+                ps2.close();
+                PreparedStatement ps3 = conn.prepareStatement("UPDATE produit SET stock = stock -? WHERE id_produit =?;");
+                ps3.setInt(1, entry.getValue());
+                ps3.setInt(2, entry.getKey().get_idproduit());
+                ps3.executeUpdate();
+                ps3.close();
+
+            }
+            ps.close();
+            conn.commit();
+            conn.setAutoCommit(true);
+            return true;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
