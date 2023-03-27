@@ -42,7 +42,7 @@ public class LoginController {
 			            Stage root = (Stage) connect.getScene().getWindow();
 			            root.setScene(new Scene(home));
 			            
-	        	        NewBillController controller = loader.getController();
+	        	        HomeController controller = loader.getController();
 	        	        controller.setUser(user);
 			        } catch (IOException e) {
 			            e.printStackTrace();

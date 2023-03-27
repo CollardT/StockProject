@@ -28,10 +28,9 @@ public class FactureDAO extends DAO<Facture> {
         try {
             if(!obj.get_produitsvendus().isEmpty()){
                 conn.setAutoCommit(false);
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO `facture`(`id_client`,`id_utilisateur`,`total`) VALUES (?,?,?);", Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO `facture`(`id_client`,`id_utilisateur`) VALUES (?,?);", Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, obj.get_Client().get_idClient());
                 ps.setInt(2, obj.get_Utilisateur().get_idUtilisateur());
-                ps.setInt(3, obj.get_total());
                 ps.executeUpdate();
                 ResultSet genkeys = ps.getGeneratedKeys();
                 if (genkeys.next()) {
@@ -56,10 +55,9 @@ public class FactureDAO extends DAO<Facture> {
                 conn.setAutoCommit(true);
             }
             else {
-                PreparedStatement ps = conn.prepareStatement("INSERT INTO `facture`(`id_client`,`id_utilisateur`,`total`) VALUES (?,?,?);");
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO `facture`(`id_client`,`id_utilisateur`) VALUES (?,?);");
                 ps.setInt(1, obj.get_Client().get_idClient());
                 ps.setInt(2, obj.get_Utilisateur().get_idUtilisateur());
-                ps.setInt(3, obj.get_total());
                 ps.executeUpdate();
                 ps.close();
             }
@@ -81,11 +79,10 @@ public class FactureDAO extends DAO<Facture> {
     public boolean update(Facture obj) {
         try {
             conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement("UPDATE `facture` SET `total` =?,`id_client`=?,`id_utilisateur`=? WHERE `id_facture` =?;");
-            ps.setInt(1, obj.get_total());
-            ps.setInt(2, obj.get_Client().get_idClient());
-            ps.setInt(3, obj.get_Utilisateur().get_idUtilisateur());
-            ps.setInt(4, obj.get_idFacture());
+            PreparedStatement ps = conn.prepareStatement("UPDATE `facture` SET `id_client`=?,`id_utilisateur`=? WHERE `id_facture` =?;");
+            ps.setInt(1, obj.get_Client().get_idClient());
+            ps.setInt(2, obj.get_Utilisateur().get_idUtilisateur());
+            ps.setInt(3, obj.get_idFacture());
             ps.executeUpdate();
             for ( Map.Entry<Produit, Integer> entry : obj.get_produitsvendus().entrySet()
                  ) {
@@ -126,8 +123,7 @@ public class FactureDAO extends DAO<Facture> {
                     rs.getInt("f.id_facture"),
                     this.clientDAO.find(rs.getInt("f.id_client")),
                     this.utilisateurDAO.find(rs.getInt("f.id_utilisateur")),
-                    new HashMap<>(),
-                    rs.getInt("f.total")
+                    new HashMap<>()
                     );
                 }
                 facture.get_produitsvendus().put(this.produitDAO.find(rs.getInt("pf.id_produit")),rs.getInt("pf.quant"));
@@ -164,8 +160,7 @@ public class FactureDAO extends DAO<Facture> {
                                 rs.getInt("f.id_facture"),
                                 this.clientDAO.find(rs.getInt("f.id_client")),
                                 this.utilisateurDAO.find(rs.getInt("f.id_utilisateur")),
-                                new HashMap<>(),
-                                rs.getInt("f.total")
+                                new HashMap<>()
                         );
                 }
                 if (rs.getInt("f.id_facture") == facture.get_idFacture()){
