@@ -103,6 +103,7 @@ public class ClientDAO extends DAO<Client> {
         }
         catch (SQLException e){
             System.out.println("Probleme de récupération du client avec l'id:"+id);
+            return null;
         }
         return client;
     }

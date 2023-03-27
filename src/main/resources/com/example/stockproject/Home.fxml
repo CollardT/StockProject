@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane minHeight="400.0" minWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockproject.controller.HomeController">
    <children>
-      <Button layoutX="139.0" layoutY="113.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Liste Clients" />
-      <Button layoutX="361.0" layoutY="113.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Liste Produits" />
-      <Button layoutX="139.0" layoutY="248.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Liste Factures" />
-      <Button layoutX="361.0" layoutY="248.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" text="Nouveau Client" />
-   </children>
+      <Button fx:id="clients" layoutX="112.0" layoutY="73.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" onAction="#openClientsList" text="Liste Clients" />
+      <Button fx:id="products" layoutX="112.0" layoutY="153.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" onAction="#openProductsList" text="Liste Produits" />
+      <Button fx:id="bills" layoutX="112.0" layoutY="238.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" onAction="#openBillsList" text="Liste Factures" />
+      <Button fx:id="disconnecting" layoutX="363.0" layoutY="238.0" minHeight="40.0" minWidth="100.0" mnemonicParsing="false" onAction="#disconnect" text="Deconnexion" />
+      <Button layoutX="338.0" layoutY="93.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" text="Nouvelle Facture" />
+ </children>
 </AnchorPane>
