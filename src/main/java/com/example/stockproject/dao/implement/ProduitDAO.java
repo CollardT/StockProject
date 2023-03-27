@@ -15,10 +15,10 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean create(Produit obj) {
         try {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO produit (nom,stock,is_active) VALUES (?,?,?)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO produit (nom,stock,isActive) VALUES (?,?,?)");
             ps.setString(1, obj.get_nom());
             ps.setDouble(2, obj.get_stock());
-            ps.setBoolean(3, obj.is_isActive());
+            ps.setBoolean(3, obj.get_isActive());
             ps.executeUpdate();
             ps.close();
             return true;
@@ -34,7 +34,7 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean delete(Produit obj) {
         try {
-            PreparedStatement ps = conn.prepareStatement("UPDATE produit SET is_active = ? WHERE id_produit =?");
+            PreparedStatement ps = conn.prepareStatement("UPDATE produit SET isActive = ? WHERE id_produit =?");
             ps.setBoolean(1, false);
             ps.setInt(2, obj.get_idproduit());
             ps.executeUpdate();
@@ -51,10 +51,11 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean update(Produit obj) {
         try {
-            PreparedStatement ps = conn.prepareStatement("UPDATE produit SET nom =?, stock =? WHERE id_produit =?");
+            PreparedStatement ps = conn.prepareStatement("UPDATE produit SET nom =?, stock =?, isActive=? WHERE id_produit =?");
             ps.setString(1, obj.get_nom());
             ps.setInt(2, obj.get_stock());
-            ps.setInt(3, obj.get_idproduit());
+            ps.setBoolean(3, obj.get_isActive());
+            ps.setInt(4, obj.get_idproduit());
             ps.executeUpdate();
             ps.close();
             return true;
@@ -91,7 +92,7 @@ public class ProduitDAO extends DAO<Produit> {
     public List<Produit> findall() {
         List<Produit> produits;
         try {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit WHERE is_active = 1");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit WHERE isActive = 1");
             ResultSet rs = ps.executeQuery();
             produits = new ArrayList<>();
             while (rs.next()) {
@@ -99,7 +100,7 @@ public class ProduitDAO extends DAO<Produit> {
                 rs.getInt("id_produit"),
                 rs.getString("nom"),
                 rs.getInt("stock"),
-                rs.getBoolean("is_active")));
+                rs.getBoolean("isActive")));
             }
             return produits;
         }
