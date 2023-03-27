@@ -1,5 +1,9 @@
 package com.example.stockproject.models;
 
+import javafx.beans.property.SimpleMapProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
+
 import java.util.Date;
 import java.util.HashMap;
 
@@ -11,11 +15,27 @@ public class Facture {
     //** Utilisation de HashMap pour récupérer les données de la facture
     private HashMap<Produit,Integer> _produitsvendus;
 
+    public ObservableMap<String, Integer> getProduitVendusProperty() {
+        return ProduitVendusProperty.get();
+    }
+
+    public SimpleMapProperty<String, Integer> produitVendusPropertyProperty() {
+        return ProduitVendusProperty;
+    }
+
+    public void setProduitVendusProperty(ObservableMap<String, Integer> produitVendusProperty) {
+        this.ProduitVendusProperty.set(produitVendusProperty);
+    }
+
+    SimpleMapProperty<String, Integer> ProduitVendusProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
     public Facture(int _idFacture, Client _Client, Utilisateur _Utilisateur,HashMap<Produit,Integer> produitsvendus) {
         this._idFacture = _idFacture;
         this._Client = _Client;
         this._Utilisateur = _Utilisateur;
         this._produitsvendus = produitsvendus;
+
+        //this.ProduitVendusProperty
+
     }
     public Facture(){
         this._idFacture = 0;

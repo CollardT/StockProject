@@ -67,39 +67,39 @@ public class HelloApplication extends Application {
             e.printStackTrace();
         }
     }
-} 
-//	/**
-//	 * Returns the main stage.
-//	 * @return
-//	 */
-//	public Stage getPrimaryStage() {
-//		return primaryStage;
-//	}
-//
-//    public static void main(String[] args) {
-//        DAO<Client> clientDAO = DAOFactory.getClientDao();
-//        DAO<Facture> factureDAO = DAOFactory.getFactureDao();
-//        List<Client> c = clientDAO.findall();
-//        for (Client klient:
-//                c) {
-//            System.out.println("nom: "+ klient.get_nom()+"\n"+"NISS: "+klient.get_NISS());
-//
-//        }
-//        Client d= clientDAO.find(3);
-//
-//        List<Facture> factures = factureDAO.findall();
-//        for (Facture facture:
-//                factures) {
-//            System.out.println(facture.get_idFacture());
-//            for (Map.Entry<Produit,Integer> set :
-//                    facture.get_produitsvendus().entrySet()
-//            ) {
-//                System.out.println(set.getKey().get_nom()+"===="+set.getValue());
-//            }
-//        }
-//        factureDAO.create(factures.get(0));
-//
-//
-//        launch();
-//    }
-//}
+
+	/**
+	 * Returns the main stage.
+	 * @return
+	 */
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+    public static void main(String[] args) {
+        DAO<Client> clientDAO = DAOFactory.getClientDao();
+        DAO<Facture> factureDAO = DAOFactory.getFactureDao();
+        List<Client> c = clientDAO.findall();
+        for (Client klient:
+                c) {
+            System.out.println("nom: "+ klient.get_nom()+"\n"+"NISS: "+klient.get_NISS());
+
+        }
+        Client d= clientDAO.find(3);
+
+        List<Facture> factures = factureDAO.findall();
+        for (Facture facture:
+                factures) {
+            System.out.println(facture.get_idFacture());
+            for (Map.Entry<Produit,Integer> set :
+                    facture.get_produitsvendus().entrySet()
+            ) {
+                System.out.println(set.getKey().get_nom()+"===="+set.getValue());
+            }
+        }
+        factureDAO.create(factures.get(0));
+
+
+        launch();
+    }
+}

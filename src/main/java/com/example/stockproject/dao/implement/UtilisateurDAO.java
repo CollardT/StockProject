@@ -18,7 +18,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     public boolean create(Utilisateur obj) {
         try {
             conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO utilisateur (login, password, permissions)");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO utilisateur (login, password, permissions) VALUES (?, ?, ?)");
             ps.setString(1, obj.get_login());
             ps.setString(2, obj.get_password());
             ps.setString(3, obj.get_role());
@@ -155,4 +155,5 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             return null;
         }
     }
+
 }
