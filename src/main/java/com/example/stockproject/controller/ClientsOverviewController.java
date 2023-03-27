@@ -52,7 +52,7 @@ public class ClientsOverviewController {
     private void initialize() {
     	// Initialize the Client table with the two columns.
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
-        ClientTable.setItems(FXCollections.observableList(clients));        
+        ClientTable.setItems(FXCollections.observableList(clients));
         
      // Listen for selection changes and show the person details when changed.
         ClientTable.getSelectionModel().selectedItemProperty().addListener(

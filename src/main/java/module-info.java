@@ -5,6 +5,7 @@ module com.example.stockproject {
     requires org.controlsfx.controls;
     requires java.sql;
 	requires javafx.graphics;
+	requires javafx.base;
 
     opens com.example.stockproject to javafx.fxml;
     exports com.example.stockproject;
