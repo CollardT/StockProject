@@ -151,6 +151,7 @@ public class FactureDAO extends DAO<Facture> {
                 }
                 facture.get_produitsvendus().put(this.produitDAO.find(rs.getInt("pf.id_produit")),rs.getInt("pf.quant"));
             }
+            conn.setAutoCommit(false);
             ps.close();
             conn.commit();
             conn.setAutoCommit(true);
@@ -197,6 +198,7 @@ public class FactureDAO extends DAO<Facture> {
                     tempProduct.put(this.produitDAO.find(rs.getInt("pf.id_produit")),rs.getInt("pf.quant"));
                 }
             }
+            conn.setAutoCommit(false);
             if(facture.get_idFacture()!=0){
                 facture.set_produitsvendus(tempProduct);
                 factures.add(facture);
