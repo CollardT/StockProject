@@ -170,46 +170,4 @@ public class ClientDAO extends DAO<Client> {
             throw new RuntimeException();
         }
     }
-
-    public List<Client> findallinactive() {
-        List<Client> clients = new ArrayList<>();
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement state = conn.prepareStatement("SELECT * FROM client c Where isActive=0");
-            ResultSet list = state.executeQuery();
-            while (list.next()){
-                clients.add(
-                        new Client(list.getInt("id_client"), list.getString("nom"), list.getString( "NISS"), list.getString("email"),list.getString("adresse"),list.getBoolean("isActive"))
-                );
-            }
-            state.close();
-            conn.commit();
-            conn.setAutoCommit(true);
-            return clients;
-        }
-        catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
-
-    public List<Client> findallactive() {
-        List<Client> clients = new ArrayList<>();
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement state = conn.prepareStatement("SELECT * FROM client c Where isActive=1");
-            ResultSet list = state.executeQuery();
-            while (list.next()){
-                clients.add(
-                        new Client(list.getInt("id_client"), list.getString("nom"), list.getString( "NISS"), list.getString("email"),list.getString("adresse"),list.getBoolean("isActive"))
-                );
-            }
-            state.close();
-            conn.commit();
-            conn.setAutoCommit(true);
-            return clients;
-        }
-        catch (SQLException e) {
-            throw new RuntimeException();
-        }
-    }
 }
