@@ -37,6 +37,7 @@ public class Utilisateur {
 
         }
     }
+
     public String get_role() {
         return _role.name();
     }

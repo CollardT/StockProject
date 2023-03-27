@@ -15,12 +15,15 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean create(Produit obj) {
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("INSERT INTO produit (nom,stock,isActive) VALUES (?,?,?)");
             ps.setString(1, obj.get_nom());
             ps.setDouble(2, obj.get_stock());
             ps.setBoolean(3, obj.get_isActive());
             ps.executeUpdate();
             ps.close();
+            conn.commit();
+            conn.setAutoCommit(true);
             return true;
         }
         catch (Exception e)
@@ -34,11 +37,14 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean delete(Produit obj) {
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("UPDATE produit SET isActive = ? WHERE id_produit =?");
             ps.setBoolean(1, false);
             ps.setInt(2, obj.get_idproduit());
             ps.executeUpdate();
             ps.close();
+            conn.commit();
+            conn.setAutoCommit(true);
             return true;
         }
         catch (Exception e) {
@@ -51,6 +57,7 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean update(Produit obj) {
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("UPDATE produit SET nom =?, stock =?, isActive=? WHERE id_produit =?");
             ps.setString(1, obj.get_nom());
             ps.setInt(2, obj.get_stock());
@@ -58,6 +65,8 @@ public class ProduitDAO extends DAO<Produit> {
             ps.setInt(4, obj.get_idproduit());
             ps.executeUpdate();
             ps.close();
+            conn.commit();
+            conn.setAutoCommit(true);
             return true;
         }
         catch (Exception e){
@@ -70,6 +79,7 @@ public class ProduitDAO extends DAO<Produit> {
     public Produit find(int id) {
         Produit produit = null;
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit WHERE id_produit =?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -80,6 +90,8 @@ public class ProduitDAO extends DAO<Produit> {
                 rs.getInt("stock"),
                 rs.getBoolean("isActive"));
             }
+            conn.commit();
+            conn.setAutoCommit(true);
             return produit;
         }
         catch (Exception e) {
@@ -92,6 +104,7 @@ public class ProduitDAO extends DAO<Produit> {
     public List<Produit> findall() {
         List<Produit> produits;
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit WHERE isActive = 1");
             ResultSet rs = ps.executeQuery();
             produits = new ArrayList<>();
@@ -102,6 +115,8 @@ public class ProduitDAO extends DAO<Produit> {
                 rs.getInt("stock"),
                 rs.getBoolean("isActive")));
             }
+            conn.commit();
+            conn.setAutoCommit(true);
             return produits;
         }
         catch (Exception e) {

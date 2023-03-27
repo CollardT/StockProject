@@ -17,12 +17,15 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     @Override
     public boolean create(Utilisateur obj) {
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("INSERT INTO utilisateur (login, password, permissions)");
             ps.setString(1, obj.get_login());
             ps.setString(2, obj.get_password());
             ps.setString(3, obj.get_role());
             ps.executeUpdate();
             ps.close();
+            conn.commit();
+            conn.setAutoCommit(true);
             return true;
         }
         catch (Exception e) {
@@ -39,6 +42,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     @Override
     public boolean update(Utilisateur obj) {
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("UPDATE utilisateur SET login =?, password =?, permissions =? WHERE id =?");
             ps.setString(1, obj.get_login());
             ps.setString(2, obj.get_password());
@@ -46,6 +50,8 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             ps.setInt(4, obj.get_idUtilisateur());
             ps.executeUpdate();
             ps.close();
+            conn.commit();
+            conn.setAutoCommit(true);
             return true;
 
         }
@@ -64,6 +70,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     public Utilisateur find(int id) {
         Utilisateur utilisateur = null;
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM utilisateur WHERE id_utilisateur =?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -74,11 +81,16 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                 rs.getString("password"),
                 rs.getString("permissions")
                 );
+                conn.commit();
+                conn.setAutoCommit(true);
                 return utilisateur;
             }
             else {
+                conn.commit();
+                conn.setAutoCommit(true);
                 return null;
             }
+
 
         }
         catch (Exception e) {
@@ -90,6 +102,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     public Utilisateur findByName(String name) {
         Utilisateur utilisateur = null;
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM utilisateur WHERE login =?");
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
@@ -100,9 +113,13 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                 rs.getString("password"),
                 rs.getString("permissions")
                 );
+                conn.commit();
+                conn.setAutoCommit(true);
                 return utilisateur;
             }
             else {
+                conn.commit();
+                conn.setAutoCommit(true);
                 return null;
             }
 
@@ -116,6 +133,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     @Override
     public List<Utilisateur> findall() {
         try {
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM utilisateur");
             ResultSet rs = ps.executeQuery();
             List<Utilisateur> utilisateurs = new java.util.ArrayList<>();
@@ -128,6 +146,8 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                 );
                 utilisateurs.add(utilisateur);
             }
+            conn.commit();
+            conn.setAutoCommit(true);
             return utilisateurs;
         }
         catch (Exception e) {
