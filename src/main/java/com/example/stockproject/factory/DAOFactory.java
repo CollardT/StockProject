@@ -19,10 +19,16 @@ public class DAOFactory {
     public static DAO<Client> getClientDao(){
         return new ClientDAO(conn);
     }
-    public static DAO<Produit> getProduitDao(){return new ProduitDAO(conn);}
-    public static DAO<Facture> getFactureDao(){return new FactureDAO(conn);}
-
-    public static DAO<Utilisateur> getUtilisateurDao(){return new UtilisateurDAO(conn);}
-
-
+    
+    public static DAO<Produit> getProduitDao(){
+    	return new ProduitDAO(conn);
+    	}
+    
+    public static DAO<Facture> getFactureDao(){
+    	return new FactureDAO(conn);
+    	}
+    
+    public static DAO<Utilisateur> getUtilisateurDao(){
+    	return new UtilisateurDAO(conn);
+    	}
 }

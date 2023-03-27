@@ -52,8 +52,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         catch (Exception e) {
             e.printStackTrace();
             return false;
-        }
-
+        } 
     }
 
     /**
@@ -88,6 +87,32 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         }
     }
 
+    public Utilisateur findByName(String name) {
+        Utilisateur utilisateur = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM utilisateur WHERE login =?");
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                utilisateur = new Utilisateur(
+                rs.getInt("id_utilisateur"),
+                rs.getString("login"),
+                rs.getString("password"),
+                rs.getString("permissions")
+                );
+                return utilisateur;
+            }
+            else {
+                return null;
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     @Override
     public List<Utilisateur> findall() {
         try {
