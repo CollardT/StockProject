@@ -23,7 +23,7 @@ import com.example.stockproject.dao.implement.ClientDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Client;
 
-public class ClientsOverviewController {
+public class ClientsController {
     @FXML
     private TableView<Client> ClientTable;
     @FXML

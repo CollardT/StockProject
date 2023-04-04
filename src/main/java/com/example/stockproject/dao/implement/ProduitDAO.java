@@ -36,7 +36,7 @@ public class ProduitDAO extends DAO<Produit> {
         try {
             PreparedStatement ps = conn.prepareStatement("UPDATE produit SET isActive = ? WHERE id_produit =?");
             ps.setBoolean(1, false);
-            ps.setInt(2, obj.get_idproduit());
+            ps.setInt(2, obj.get_idProduit());
             ps.executeUpdate();
             ps.close();
             return true;
@@ -55,7 +55,7 @@ public class ProduitDAO extends DAO<Produit> {
             ps.setString(1, obj.get_nom());
             ps.setInt(2, obj.get_stock());
             ps.setBoolean(3, obj.get_isActive());
-            ps.setInt(4, obj.get_idproduit());
+            ps.setInt(4, obj.get_idProduit());
             ps.executeUpdate();
             ps.close();
             return true;

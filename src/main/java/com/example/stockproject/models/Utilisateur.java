@@ -6,27 +6,28 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Utilisateur {
-    private IntegerProperty _idUtilisateur;
-    private StringProperty _login;
-    private StringProperty _password;
+
+	private int _idUtilisateur;
+	private String _login;
+	private String _password;
     private enum permissions{
         SELLER,
         MANAGER,
         ADMIN
     }
     private permissions _role;
+    
+    private IntegerProperty _idUtilisateurProperty;
+    private StringProperty _loginProperty;
+    private StringProperty _passwordProperty;
 
     public Utilisateur() {
-    	this._idUtilisateur = new SimpleIntegerProperty();
-        this._login = new SimpleStringProperty();
-        this._password = new SimpleStringProperty();
-        this._role = setpermissions("SELLER");
     }
     
     public Utilisateur(int _idUtilisateur, String _login, String _password,String _role) {
-        this._idUtilisateur = new SimpleIntegerProperty(_idUtilisateur);
-        this._login = new SimpleStringProperty(_login);
-        this._password = new SimpleStringProperty(_password);
+        this._idUtilisateurProperty = new SimpleIntegerProperty(_idUtilisateur);
+        this._loginProperty = new SimpleStringProperty(_login);
+        this._passwordProperty = new SimpleStringProperty(_password);
         this._role = setpermissions(_role);
     }
 
@@ -53,38 +54,62 @@ public class Utilisateur {
     }
     
     public int get_idUtilisateur() {
-        return _idUtilisateur.get();
+    	return _idUtilisateur;
+    }
+    
+    public void set_idUtilisateur(int _idUtilisateur) {
+    	this._idUtilisateur = _idUtilisateur;
+    }
+    
+    public int get_idUtilisateurProperty() {
+        return _idUtilisateurProperty.get();
     }
 
-    public void set_idUtilisateur(int _idUtilisateur) {
-        this._idUtilisateur.set(_idUtilisateur);
+    public void set_idUtilisateurProperty(int _idUtilisateur) {
+        this._idUtilisateurProperty.set(_idUtilisateur);
     }
     
     public IntegerProperty idUtilisateurProperty() {
-    	return _idUtilisateur;
+    	return _idUtilisateurProperty;
     }
-
+    
     public String get_login() {
-        return _login.get();
+    	return _login;
+    }
+    
+    public void set_login(String _login) {
+    	this._login = _login;
     }
 
-    public void set_login(String _login) {
-        this._login.set(_login);
+    public String get_loginProperty() {
+        return _loginProperty.get();
+    }
+
+    public void set_loginProperty(String _login) {
+        this._loginProperty.set(_login);
     }
     
     public StringProperty loginProperty() {
-    	return _login;
+    	return _loginProperty;
     }
 
     public String get_password() {
-        return _password.get();
+    	return _password;
+    }
+    
+    public void set_password(String _password) {
+    	this._password = _password;
+    }
+    
+    public String get_passwordProperty() {
+        return _passwordProperty.get();
     }
 
-    public void set_password(String _password) {
-        this._password.set(_password);
+    public void set_passwordProperty(String _password) {
+        this._passwordProperty.set(_password);
     }
     
     public StringProperty passwordProperty() {
-    	return _password;
+    	return _passwordProperty;
     }
 }

@@ -28,13 +28,13 @@ public class NewUserController {
 	private Button submit, cancel;
 	
 	private UtilisateurDAO userDAO = (UtilisateurDAO) DAOFactory.getUtilisateurDao();
-	private String regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$";
+	private String passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$";
 	
 	@FXML
 	private void confirm() {
 		Utilisateur user = new Utilisateur();
 		if(userDAO.findByName(login.getText()) == null) {
-			if(password.getText().matches(regex) ) {
+			if(password.getText().matches(passwordRegex)) {
 				if(password.getText().equals(confirmPassword.getText())) {
 					user.set_login(login.getText());
 					user.set_password(password.getText());
