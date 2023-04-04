@@ -19,7 +19,7 @@ public class ProduitDAO extends DAO<Produit> {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO produit (nom,stock,isActive) VALUES (?,?,?)");
             ps.setString(1, obj.get_nom());
             ps.setDouble(2, obj.get_stock());
-            ps.setBoolean(3, obj.is_isActive());
+            ps.setBoolean(3, obj.get_isActive());
             ps.executeUpdate();
             ps.close();
             conn.commit();
@@ -42,7 +42,7 @@ public class ProduitDAO extends DAO<Produit> {
             conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("UPDATE produit SET isActive = ? WHERE id_produit =?");
             ps.setBoolean(1, false);
-            ps.setInt(2, obj.get_idproduit());
+            ps.setInt(2, obj.get_idProduit());
             ps.executeUpdate();
             ps.close();
             conn.commit();
@@ -74,8 +74,8 @@ public class ProduitDAO extends DAO<Produit> {
             PreparedStatement ps = conn.prepareStatement("UPDATE produit SET nom =?, stock =?, isActive=? WHERE id_produit =?");
             ps.setString(1, obj.get_nom());
             ps.setInt(2, obj.get_stock());
-            ps.setBoolean(3, obj.is_isActive());
-            ps.setInt(4, obj.get_idproduit());
+            ps.setBoolean(3, obj.get_isActive());
+            ps.setInt(4, obj.get_idProduit());
             ps.executeUpdate();
             ps.close();
             conn.commit();
@@ -147,59 +147,16 @@ public class ProduitDAO extends DAO<Produit> {
             produits = new ArrayList<>();
             while (rs.next()) {
                 produits.add(new Produit(
-                        rs.getInt("id_produit"),
-                        rs.getString("nom"),
-                        rs.getInt("stock"),
-                        rs.getBoolean("isActive")));
+                rs.getInt("id_produit"),
+                rs.getString("nom"),
+                rs.getInt("stock"),
+                rs.getBoolean("isActive")));
             }
-            conn.commit();
-            conn.setAutoCommit(true);
             return produits;
         }
         catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-    }
-    public List<Produit> findallinactive() {
-        List<Produit> produits;
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit WHERE isActive = 0");
-            ResultSet rs = ps.executeQuery();
-            produits = new ArrayList<>();
-            while (rs.next()) {
-                produits.add(new Produit(
-                        rs.getInt("id_produit"),
-                        rs.getString("nom"),
-                        rs.getInt("stock"),
-                        rs.getBoolean("isActive")));
-            }
-            conn.commit();
-            conn.setAutoCommit(true);
-            return produits;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    public boolean checkForProduits(Produit obj) {
-        try {
-            conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit_facture WHERE id_produit=?");
-            ps.setInt(1, obj.get_idproduit());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return true;
-            }
-            conn.commit();
-            conn.setAutoCommit(true);
-            return false;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return false;
         }
     }
 }

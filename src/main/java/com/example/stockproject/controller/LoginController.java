@@ -35,7 +35,7 @@ public class LoginController {
 		String name = login.getText();
 		Utilisateur user = userDAO.findByName(name);
 		if(user != null) {
-			if(user.get_password().equals(password.getText())) {
+			if(user.get_passwordProperty().equals(password.getText())) {
 			        try {
 			            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("Home.fxml"));
 			            AnchorPane home = (AnchorPane) loader.load();

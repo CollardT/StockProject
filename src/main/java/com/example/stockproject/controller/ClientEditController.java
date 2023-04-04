@@ -25,6 +25,10 @@ public class ClientEditController {
     private CheckBox isActiveCheckBox;
     @FXML
     private Button confirm, cancel;
+    
+    private String nomRegex = "[a-zA-Z ']*";
+    private String NISSRegex = "[0-9]{11}";
+    private String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$";
 
 
     private Client client;
@@ -80,18 +84,18 @@ public class ClientEditController {
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (nameLabel.getText() == null || nameLabel.getText().length() == 0) {
-            errorMessage += "No valid first name!\n";
+        if (nameLabel.getText() == null || !nameLabel.getText().matches(nomRegex)) {
+            errorMessage += "Nom du client invalide\n";
         }
-        if (nissLabel.getText() == null || nissLabel.getText().length() == 0) {
-            errorMessage += "No valid last name!\n";
+        if (nissLabel.getText() == null || !nissLabel.getText().matches(NISSRegex)) {
+            errorMessage += "Le numéro national doit uniquement être composé de 11 chiffres\n";
         }
-        if (emailLabel.getText() == null || emailLabel.getText().length() == 0) {
-            errorMessage += "No valid street!\n";
+        if (emailLabel.getText() == null || !emailLabel.getText().matches(emailRegex)) {
+            errorMessage += "Adresse mail invalide\n";
         }
 
         if (adresseLabel.getText() == null || adresseLabel.getText().length() == 0) {
-            errorMessage += "No valid city!\n";
+            errorMessage += "L'adresse est invalide\n";
         }
 
         if (errorMessage.length() == 0) {
@@ -100,8 +104,8 @@ public class ClientEditController {
             // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
             //alert.initOwner(editWindow);
-            alert.setTitle("Invalid Fields");
-            alert.setHeaderText("Please correct invalid fields");
+            alert.setTitle("Erreur d'encodage");
+            alert.setHeaderText("Merci de vérifier les champs invalides");
             alert.setContentText(errorMessage);
 
             alert.showAndWait();

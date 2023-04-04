@@ -3,6 +3,7 @@ package com.example.stockproject.controller;
 import com.example.stockproject.dao.implement.ProduitDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Produit;
+import com.example.stockproject.utilities.IsANumber;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -51,7 +52,7 @@ public class ProductEditController {
     		this.product.set_stock(Integer.parseInt(stockLabel.getText()));
     		this.product.set_isActive(isActiveCheckBox.isSelected());
     		
-    		if(productDAO.find(this.product.get_idproduit()) != null) {
+    		if(productDAO.find(this.product.get_idProduit()) != null) {
     			productDAO.update(this.product);
     		} else {
     			productDAO.create(this.product);
@@ -71,10 +72,10 @@ public class ProductEditController {
         String errorMessage = "";
 
         if (nameLabel.getText() == null || nameLabel.getText().length() == 0) {
-            errorMessage += "No valid first name!\n";
+            errorMessage += "Nom du produit invalide\n";
         }
-        if (stockLabel.getText() == null || stockLabel.getText().length() == 0) {
-            errorMessage += "No valid last name!\n";
+        if (stockLabel.getText() == null || !IsANumber.isANumber(stockLabel.getText())) {
+            errorMessage += "Veuillez n'entrer que des chiffres pour le stock\n";
         }
         if (errorMessage.length() == 0) {
             return true;

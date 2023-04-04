@@ -39,13 +39,13 @@ public class FactureDAO extends DAO<Facture> {
                     {
                         PreparedStatement ps2 = conn.prepareStatement("INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
                         ps2.setInt(1, id_facture);
-                        ps2.setInt(2, entry.getKey().get_idproduit());
+                        ps2.setInt(2, entry.getKey().get_idProduit());
                         ps2.setInt(3, entry.getValue());
                         ps2.executeUpdate();
                         ps2.close();
                         PreparedStatement ps3 = conn.prepareStatement("UPDATE produit SET stock = stock - ? WHERE id_produit =?;");
                         ps3.setInt(1, entry.getValue());
-                        ps3.setInt(2, entry.getKey().get_idproduit());
+                        ps3.setInt(2, entry.getKey().get_idProduit());
                         ps3.executeUpdate();
                     }
                 }
@@ -88,13 +88,13 @@ public class FactureDAO extends DAO<Facture> {
                  ) {
                 PreparedStatement ps2 = conn.prepareStatement("INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
                 ps2.setInt(1, obj.get_idFacture());
-                ps2.setInt(2, entry.getKey().get_idproduit());
+                ps2.setInt(2, entry.getKey().get_idProduit());
                 ps2.setInt(3, entry.getValue());
                 ps2.executeUpdate();
                 ps2.close();
                 PreparedStatement ps3 = conn.prepareStatement("UPDATE produit SET stock = stock -? WHERE id_produit =?;");
                 ps3.setInt(1, entry.getValue());
-                ps3.setInt(2, entry.getKey().get_idproduit());
+                ps3.setInt(2, entry.getKey().get_idProduit());
                 ps3.executeUpdate();
                 ps3.close();
 
