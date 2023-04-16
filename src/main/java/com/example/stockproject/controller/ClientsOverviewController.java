@@ -51,7 +51,7 @@ public class ClientsOverviewController {
     @FXML
     private void initialize() {
     	// Initialize the Client table with the two columns.
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue()._nomPropertyProperty());
         ClientTable.setItems(FXCollections.observableList(clients));
         
      // Listen for selection changes and show the person details when changed.
@@ -63,16 +63,16 @@ public class ClientsOverviewController {
      * Fills all text fields to show details about the person.
      * If the specified person is null, all text fields are cleared.
      *
-     * @param person the person or null
+     * @param client the client or null
      */
     private void showClientDetails(Client client) {
         if (client != null) {
             // Fill the labels with info from the person object.
-            nameLabel.setText(client.get_nom());
+            nameLabel.setText(client.get_nomClient());
             nissLabel.setText(client.get_NISS());
             emailLabel.setText(client.get_email());
             adresseLabel.setText(client.get_adresse());
-            isActiveCheckBox.setSelected(client.get_isActive());
+            isActiveCheckBox.setSelected(client.is_isActive());
         } else {
             // Person is null, remove all the text.
             nameLabel.setText("");

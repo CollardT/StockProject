@@ -19,7 +19,7 @@ public class ProduitDAO extends DAO<Produit> {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO produit (nom,stock,isActive) VALUES (?,?,?)");
             ps.setString(1, obj.get_nom());
             ps.setDouble(2, obj.get_stock());
-            ps.setBoolean(3, obj.get_isActive());
+            ps.setBoolean(3, obj.is_isActive());
             ps.executeUpdate();
             ps.close();
             conn.commit();
@@ -37,6 +37,8 @@ public class ProduitDAO extends DAO<Produit> {
     @Override
     public boolean delete(Produit obj) {
         try {
+            if(checkForProduits(obj))
+            {
             conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement("UPDATE produit SET isActive = ? WHERE id_produit =?");
             ps.setBoolean(1, false);
@@ -46,6 +48,17 @@ public class ProduitDAO extends DAO<Produit> {
             conn.commit();
             conn.setAutoCommit(true);
             return true;
+            }
+            else {
+                conn.setAutoCommit(false);
+                PreparedStatement ps = conn.prepareStatement("DELETE FROM produit WHERE id_produit =?");
+                ps.setInt(1, obj.get_idproduit());
+                ps.executeUpdate();
+                ps.close();
+                conn.commit();
+                conn.setAutoCommit(true);
+                return true;
+            }
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +74,7 @@ public class ProduitDAO extends DAO<Produit> {
             PreparedStatement ps = conn.prepareStatement("UPDATE produit SET nom =?, stock =?, isActive=? WHERE id_produit =?");
             ps.setString(1, obj.get_nom());
             ps.setInt(2, obj.get_stock());
-            ps.setBoolean(3, obj.get_isActive());
+            ps.setBoolean(3, obj.is_isActive());
             ps.setInt(4, obj.get_idproduit());
             ps.executeUpdate();
             ps.close();
@@ -169,6 +182,24 @@ public class ProduitDAO extends DAO<Produit> {
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public boolean checkForProduits(Produit obj) {
+        try {
+            conn.setAutoCommit(false);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit_facture WHERE id_produit=?");
+            ps.setInt(1, obj.get_idproduit());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            conn.commit();
+            conn.setAutoCommit(true);
+            return false;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

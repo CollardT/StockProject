@@ -1,17 +1,26 @@
 package com.example.stockproject.models;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 public class ProduitQuantite {
     private Produit produit;
     private int quantite;
+    private ObjectProperty<Produit> produitProperty;
     private IntegerProperty quantiteProperty;
+
+    public ProduitQuantite(){
+
+    }
 
     public ProduitQuantite(Produit produit, int quantite) {
         this.produit = produit;
         this.quantite = quantite;
+
         quantiteProperty = new SimpleIntegerProperty(quantite);
+        produitProperty = new SimpleObjectProperty<>(produit);
     }
 
 
@@ -41,5 +50,17 @@ public class ProduitQuantite {
 
     public void setQuantite(int quantite) {
         this.quantite = quantite;
+    }
+
+    public Produit getProduitProperty() {
+        return produitProperty.get();
+    }
+
+    public ObjectProperty<Produit> produitPropertyProperty() {
+        return produitProperty;
+    }
+
+    public void setProduitProperty(Produit produitProperty) {
+        this.produitProperty.set(produitProperty);
     }
 }

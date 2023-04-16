@@ -38,11 +38,11 @@ public class ClientEditController {
     public void setClient(Client client) {
     	this.client = client;
     	if(client != null) { 		
-    		nameLabel.setText(this.client.get_nom());
+    		nameLabel.setText(this.client.get_nomClient());
     		nissLabel.setText(this.client.get_NISS());
     		emailLabel.setText(this.client.get_email());
     		adresseLabel.setText(this.client.get_adresse());
-    		isActiveCheckBox.setSelected(this.client.get_isActive());
+    		isActiveCheckBox.setSelected(this.client.is_isActive());
     	} else {
     		this.client = new Client();
             nameLabel.setText("");
@@ -56,7 +56,7 @@ public class ClientEditController {
     @FXML
     private void submit() {
     	if(isInputValid()) {
-    		this.client.set_nom(nameLabel.getText());
+    		this.client.set_nomClient(nameLabel.getText());
     		this.client.set_NISS(nissLabel.getText());
     		this.client.set_email(emailLabel.getText());
     		this.client.set_adresse(adresseLabel.getText());

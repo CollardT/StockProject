@@ -35,7 +35,7 @@ public class ProductEditController {
         if(product != null) {
             nameLabel.setText(this.product.get_nom());
             stockLabel.setText(Integer.toString(this.product.get_stock()));
-            isActiveCheckBox.setSelected(this.product.get_isActive());
+            isActiveCheckBox.setSelected(this.product.is_isActive());
         } else {
         	this.product = new Produit();
         	nameLabel.setText("");
