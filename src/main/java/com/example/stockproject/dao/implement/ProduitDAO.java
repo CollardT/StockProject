@@ -52,7 +52,7 @@ public class ProduitDAO extends DAO<Produit> {
             else {
                 conn.setAutoCommit(false);
                 PreparedStatement ps = conn.prepareStatement("DELETE FROM produit WHERE id_produit =?");
-                ps.setInt(1, obj.get_idproduit());
+                ps.setInt(1, obj.get_idProduit());
                 ps.executeUpdate();
                 ps.close();
                 conn.commit();
@@ -157,6 +157,24 @@ public class ProduitDAO extends DAO<Produit> {
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public boolean checkForProduits(Produit obj) {
+        try {
+            conn.setAutoCommit(false);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit_facture WHERE id_produit=?");
+            ps.setInt(1, obj.get_idProduit());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            conn.commit();
+            conn.setAutoCommit(true);
+            return false;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

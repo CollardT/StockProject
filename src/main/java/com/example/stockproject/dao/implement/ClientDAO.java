@@ -25,7 +25,7 @@ public class ClientDAO extends DAO<Client> {
         try {
             conn.setAutoCommit(false);
             PreparedStatement state = conn.prepareStatement("INSERT INTO client (nom,NISS,email,adresse,isActive) VALUES (?,?,?,?,?)");
-            state.setString(1, obj.get_nomClient());
+            state.setString(1, obj.get_nom());
             state.setString(2, obj.get_NISS());
             state.setString(3, obj.get_email());
             state.setString(4, obj.get_adresse());
@@ -39,7 +39,7 @@ public class ClientDAO extends DAO<Client> {
         }
         catch (SQLException e){
             e.printStackTrace();
-            System.out.println("Vous ne pouvez pas créer le client suivant:" + obj.get_nomClient());
+            System.out.println("Vous ne pouvez pas créer le client suivant:" + obj.get_nom());
             return false;
         }
     }
@@ -83,11 +83,11 @@ public class ClientDAO extends DAO<Client> {
         try {
             conn.setAutoCommit(false);
             PreparedStatement state = conn.prepareStatement("UPDATE client SET nom=?, NISS=?, email=?, adresse=?, isActive=?  WHERE client.id_client = ?");
-            state.setString(1,obj.get_nomClient());
+            state.setString(1,obj.get_nom());
             state.setString(2,obj.get_NISS());
             state.setString(3,obj.get_email());
             state.setString(4,obj.get_adresse());
-            state.setBoolean(5,obj.is_isActive());
+            state.setBoolean(5,obj.get_isActive());
             state.setInt(6,obj.get_idClient());
             state.executeUpdate();
             state.close();

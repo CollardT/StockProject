@@ -1,0 +1,11 @@
+.root {
+	-fx-background-color: #BBD2E1;
+}
+
+.label, .check-box {
+	-fx-text-fill: #1D4851;
+}
+
+#title {
+	-fx-text-fill: #4E1609 ;
+}
