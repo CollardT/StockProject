@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockproject.controller.LoginController">
+<AnchorPane onKeyPressed="#onKeyPressed" prefHeight="372.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockproject.controller.LoginController">
    <children>
-      <Label layoutX="186.0" layoutY="136.0" text="Login" />
-      <TextField fx:id="login" layoutX="266.0" layoutY="132.0" />
-      <Label layoutX="186.0" layoutY="179.0" text="Password" />
-      <PasswordField fx:id="password" layoutX="266.0" layoutY="175.0" />
-      <Button fx:id="connect" layoutX="200.0" layoutY="258.0" minHeight="20.0" minWidth="50.0" mnemonicParsing="false" onAction="#connection" text="Connexion" />
-      <Button fx:id="quit" layoutX="328.0" layoutY="258.0" minHeight="20.0" minWidth="50.0" mnemonicParsing="false" text="Quitter" onAction="#close" />
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/tools.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="145.0" layoutY="48.0" prefHeight="268.0" prefWidth="308.0">
+         <children>
+            <Label layoutX="45.0" layoutY="99.0" prefHeight="35.0" prefWidth="215.0" text="Login">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <TextField fx:id="login" layoutX="108.0" layoutY="103.0" promptText="Login" />
+            <Label layoutX="45.0" layoutY="154.0" prefHeight="35.0" prefWidth="215.0" text="Password">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <PasswordField fx:id="password" layoutX="108.0" layoutY="159.0" promptText="Password" />
+            <Button fx:id="connect" layoutX="66.0" layoutY="224.0" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#connection" text="Connexion" />
+            <Button fx:id="quit" layoutX="163.0" layoutY="224.0" minHeight="30.0" minWidth="80.0" mnemonicParsing="false" onAction="#close" text="Quitter" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

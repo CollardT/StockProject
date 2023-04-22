@@ -1,0 +1,15 @@
+* {
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
+}
+.button {
+	  -fx-padding: 10px;
+  	  -fx-background-radius : 10px;
+	  -fx-cursor: hand;
+	  -fx-font-weight: bold;
+}
+
+#quit {
+	-fx-background-color: #F4451D;
+	-fx-text-fill: #F6F6F6;
+}
