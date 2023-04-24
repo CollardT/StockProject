@@ -25,6 +25,7 @@ public class ClientDAO extends DAO<Client> {
 	@Override
 	public boolean create(Client obj) {
 		try {
+			conn.setAutoCommit(false);
 			PreparedStatement state = conn
 					.prepareStatement("INSERT INTO client (nom,NISS,email,adresse,isActive) VALUES (?,?,?,?,?)");
 			state.setString(1, obj.get_nom());
@@ -34,6 +35,8 @@ public class ClientDAO extends DAO<Client> {
 			state.setBoolean(5, true);
 			state.executeUpdate();
 			state.close();
+			conn.commit();
+			conn.setAutoCommit(true);
 			return true;
 
 		} catch (SQLException e) {
@@ -53,14 +56,26 @@ public class ClientDAO extends DAO<Client> {
 	@Override
 	public boolean delete(Client obj) {
 		try {
-			PreparedStatement state = conn.prepareStatement("UPDATE client isActive=?  WHERE client.id_client = ?");
-			state.setBoolean(1, false);
-			state.setInt(2, obj.get_idClient());
-			state.executeUpdate();
-			state.close();
+			if (checkforclient(obj)) {
+				conn.setAutoCommit(false);
+				PreparedStatement state = conn.prepareStatement("UPDATE client isActive=? WHERE client.id_client = ?");
+				state.setBoolean(1, false);
+				state.setInt(2, obj.get_idClient());
+				state.executeUpdate();
+				state.close();
+			} else {
+				conn.setAutoCommit(false);
+				PreparedStatement state = conn.prepareStatement("DELETE FROM client WHERE client.id_client = ?");
+				state.setInt(1, obj.get_idClient());
+				state.executeUpdate();
+				state.close();
+			}
+
+			conn.commit();
+			conn.setAutoCommit(true);
 			return true;
 		} catch (SQLException e) {
-			System.out.println("Probleme d'update du client avec l'id:" + obj.get_idClient());
+			System.out.println("Probleme de suppression du client avec l'id:" + obj.get_idClient());
 			return false;
 		}
 	}
@@ -68,6 +83,7 @@ public class ClientDAO extends DAO<Client> {
 	@Override
 	public boolean update(Client obj) {
 		try {
+			conn.setAutoCommit(false);
 			PreparedStatement state = conn.prepareStatement(
 					"UPDATE client SET nom=?, NISS=?, email=?, adresse=?, isActive=?  WHERE client.id_client = ?");
 			state.setString(1, obj.get_nom());
@@ -78,6 +94,8 @@ public class ClientDAO extends DAO<Client> {
 			state.setInt(6, obj.get_idClient());
 			state.executeUpdate();
 			state.close();
+			conn.commit();
+			conn.setAutoCommit(true);
 			return true;
 
 		} catch (SQLException e) {
@@ -97,6 +115,7 @@ public class ClientDAO extends DAO<Client> {
 	public Client find(int id) {
 		Client client = null;
 		try {
+			conn.setAutoCommit(false);
 			PreparedStatement state = conn.prepareStatement("SELECT * FROM client c WHERE c.id_client=?");
 			state.setInt(1, id);
 			ResultSet result = state.executeQuery();
@@ -104,16 +123,19 @@ public class ClientDAO extends DAO<Client> {
 				client = new Client(id, result.getString("nom"), result.getString("NISS"), result.getString("email"),
 						result.getString("adresse"), result.getBoolean("isActive"));
 			}
+			conn.commit();
+			conn.setAutoCommit(true);
+			return client;
 		} catch (SQLException e) {
 			System.out.println("Probleme de récupération du client avec l'id:" + id);
 			return null;
 		}
-		return client;
 	}
 
 	public Client findbyname(String name) {
 		Client client = null;
 		try {
+			conn.setAutoCommit(false);
 			PreparedStatement state = conn.prepareStatement("SELECT * FROM client c WHERE c.nom=?");
 			state.setString(1, name);
 			ResultSet result = state.executeQuery();
@@ -121,6 +143,8 @@ public class ClientDAO extends DAO<Client> {
 				client = new Client(result.getInt("id_client"), result.getString("nom"), result.getString("NISS"),
 						result.getString("email"), result.getString("adresse"), result.getBoolean("isActive"));
 			}
+			conn.commit();
+			conn.setAutoCommit(true);
 			return client;
 		} catch (SQLException e) {
 			System.out.println("Probleme de récupération du client avec le nom:" + name);
@@ -138,6 +162,7 @@ public class ClientDAO extends DAO<Client> {
 	public List<Client> findall() {
 		List<Client> clients = new ArrayList<>();
 		try {
+			conn.setAutoCommit(false);
 			PreparedStatement state = conn.prepareStatement("SELECT * FROM client c Where isActive=1");
 			ResultSet list = state.executeQuery();
 			while (list.next()) {
@@ -145,9 +170,76 @@ public class ClientDAO extends DAO<Client> {
 						list.getString("email"), list.getString("adresse"), list.getBoolean("isActive")));
 			}
 			state.close();
+			conn.commit();
+			conn.setAutoCommit(true);
 			return clients;
 		} catch (SQLException e) {
 			throw new RuntimeException();
+		}
+	}
+
+	public List<Client> findallinactive() {
+		List<Client> clients = new ArrayList<>();
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement state = conn.prepareStatement("SELECT * FROM client c Where isActive=0");
+			ResultSet list = state.executeQuery();
+			while (list.next()) {
+				clients.add(new Client(list.getInt("id_client"), list.getString("nom"), list.getString("NISS"),
+						list.getString("email"), list.getString("adresse"), list.getBoolean("isActive")));
+			}
+			state.close();
+			conn.commit();
+			conn.setAutoCommit(true);
+			return clients;
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
+
+	public List<Client> findallactive() {
+		List<Client> clients = new ArrayList<>();
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement state = conn.prepareStatement("SELECT * FROM client c Where isActive=1");
+			ResultSet list = state.executeQuery();
+			while (list.next()) {
+				clients.add(new Client(list.getInt("id_client"), list.getString("nom"), list.getString("NISS"),
+						list.getString("email"), list.getString("adresse"), list.getBoolean("isActive")));
+			}
+			state.close();
+			conn.commit();
+			conn.setAutoCommit(true);
+			return clients;
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+	}
+
+	/**
+	 * Vérifie si une facture contient l'id du client qui va être supprimé. Retourne
+	 * Faux si il existe dans une facture
+	 */
+	public boolean checkforclient(Client obj) {
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement state = conn.prepareStatement("SELECT * FROM facture WHERE id_client=?");
+			state.setInt(1, obj.get_idClient());
+			ResultSet rs = state.executeQuery();
+			if (rs.next()) {
+				state.close();
+				conn.commit();
+				conn.setAutoCommit(true);
+				return true;
+			}
+			state.close();
+			conn.commit();
+			conn.setAutoCommit(true);
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+
 		}
 	}
 }
