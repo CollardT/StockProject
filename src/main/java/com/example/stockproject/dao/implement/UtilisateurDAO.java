@@ -1,6 +1,7 @@
 package com.example.stockproject.dao.implement;
 
 import com.example.stockproject.dao.DAO;
+import com.example.stockproject.models.Client;
 import com.example.stockproject.models.Utilisateur;
 
 import java.sql.Connection;
@@ -36,14 +37,42 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
     @Override
     public boolean delete(Utilisateur obj) {
-        return false;
+        try {
+            if(checkforuser(obj))
+            {
+                conn.setAutoCommit(false);
+                PreparedStatement ps = conn.prepareStatement("UPDATE utilisateur SET isActive = ? WHERE id_utilisateur =?");
+                ps.setBoolean(1, false);
+                ps.setInt(2, obj.get_idUtilisateur());
+                ps.executeUpdate();
+                ps.close();
+                conn.commit();
+                conn.setAutoCommit(true);
+                return true;
+            }
+            else {
+                conn.setAutoCommit(false);
+                PreparedStatement ps = conn.prepareStatement("DELETE FROM utilisateur WHERE id_utilisateur =?");
+                ps.setInt(1, obj.get_idUtilisateur());
+                ps.executeUpdate();
+                ps.close();
+                conn.commit();
+                conn.setAutoCommit(true);
+                return true;
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     @Override
     public boolean update(Utilisateur obj) {
         try {
             conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement("UPDATE utilisateur SET login =?, password =?, permissions =? WHERE id =?");
+            PreparedStatement ps = conn.prepareStatement("UPDATE utilisateur SET login =?, password =?, permissions =? WHERE id_utilisateur =?");
             ps.setString(1, obj.get_login());
             ps.setString(2, obj.get_password());
             ps.setString(3, obj.get_role());
@@ -153,6 +182,29 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    public boolean checkforuser(Utilisateur obj){
+        try{
+            conn.setAutoCommit(false);
+            PreparedStatement state = conn.prepareStatement("SELECT * FROM facture WHERE id_utilisateur=?");
+            state.setInt(1,obj.get_idUtilisateur());
+            ResultSet rs = state.executeQuery();
+            if(rs.next()){
+                state.close();
+                conn.commit();
+                conn.setAutoCommit(true);
+                return true;
+            }
+            state.close();
+            conn.commit();
+            conn.setAutoCommit(true);
+            return false;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
         }
     }
 }

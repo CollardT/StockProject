@@ -16,19 +16,19 @@ import java.sql.Connection;
 public class DAOFactory {
     protected static final Connection conn = DBConnectionSingleton.getInstance();
 
-    public static DAO<Client> getClientDao(){
+    public static ClientDAO getClientDao(){
         return new ClientDAO(conn);
     }
     
-    public static DAO<Produit> getProduitDao(){
+    public static ProduitDAO getProduitDao(){
     	return new ProduitDAO(conn);
     	}
     
-    public static DAO<Facture> getFactureDao(){
+    public static FactureDAO getFactureDao(){
     	return new FactureDAO(conn);
     	}
     
-    public static DAO<Utilisateur> getUtilisateurDao(){
+    public static UtilisateurDAO getUtilisateurDao(){
     	return new UtilisateurDAO(conn);
     	}
 }
