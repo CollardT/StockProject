@@ -52,7 +52,7 @@ public class NewBillController {
      */
     @FXML
     private void initialize() {
-    	clients.forEach((x) -> ClientsList.getItems().add(x.get_nomClient()));
+    	clients.forEach((x) -> ClientsList.getItems().add(x.get_nom()));
     	products.forEach((x) -> ProductsList.getItems().add(x.get_nom()));
         
         

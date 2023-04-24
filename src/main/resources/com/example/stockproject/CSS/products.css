@@ -1,0 +1,36 @@
+.table-row-cell:selected {
+	-fx-text-background-color: grey;
+}
+
+.table-row-cell:odd {
+	-fx-background-color: #F1E2BE;
+}
+
+.table-row-cell:even {
+	-fx-background-color: #F4C430;
+}
+
+.button {
+	-fx-background-color: #7E3300;
+	-fx-text-fill: white;
+}
+
+#newProductWindow {
+	-fx-background-color : #955628;
+}
+
+#reload {
+	-fx-background-color: #EF9B0F;
+}
+
+.gridLabel {
+	-fx-background-color: rgba(107,107,107,0.4);
+	-fx-border-style: solid inside;
+	-fx-border-width: 1;
+	-fx-text-fill: white;
+}
+
+.check-box {
+	-fx-text-fill: white;
+	-fx-opacity: 1;
+}
