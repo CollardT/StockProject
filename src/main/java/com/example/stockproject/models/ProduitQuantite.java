@@ -6,61 +6,62 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class ProduitQuantite {
-    private Produit produit;
-    private int quantite;
-    private ObjectProperty<Produit> produitProperty;
-    private IntegerProperty quantiteProperty;
 
-    public ProduitQuantite(){
+	private Produit produit;
+	private int quantite;
 
-    }
+	private ObjectProperty<Produit> produitProperty;
+	private IntegerProperty quantiteProperty;
 
-    public ProduitQuantite(Produit produit, int quantite) {
-        this.produit = produit;
-        this.quantite = quantite;
+	public ProduitQuantite() {
 
-        quantiteProperty = new SimpleIntegerProperty(quantite);
-        produitProperty = new SimpleObjectProperty<>(produit);
-    }
+	}
 
+	public ProduitQuantite(Produit produit, int quantite) {
+		this.produit = produit;
+		this.quantite = quantite;
 
-    public int getQuantiteProperty() {
-        return quantiteProperty.get();
-    }
+		produitProperty = new SimpleObjectProperty<>(produit);
+		quantiteProperty = new SimpleIntegerProperty(quantite);
+	}
 
-    public IntegerProperty quantitePropertyProperty() {
-        return quantiteProperty;
-    }
+	public int getQuantiteProperty() {
+		return quantiteProperty.get();
+	}
 
-    public void setQuantiteProperty(int quantiteProperty) {
-        this.quantiteProperty.set(quantiteProperty);
-    }
+	public IntegerProperty quantitePropertyProperty() {
+		return quantiteProperty;
+	}
 
-    public Produit getProduit() {
-        return produit;
-    }
+	public void setQuantiteProperty(int quantiteProperty) {
+		this.quantiteProperty.set(quantiteProperty);
+	}
 
-    public void setProduit(Produit produit) {
-        this.produit = produit;
-    }
+	public Produit getProduit() {
+		return produit;
+	}
 
-    public int getQuantite() {
-        return quantite;
-    }
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+	}
 
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
-    }
+	public int getQuantite() {
+		return quantite;
+	}
 
-    public Produit getProduitProperty() {
-        return produitProperty.get();
-    }
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
+	}
 
-    public ObjectProperty<Produit> produitPropertyProperty() {
-        return produitProperty;
-    }
+	public Produit getProduitProperty() {
+		return produitProperty.get();
+	}
 
-    public void setProduitProperty(Produit produitProperty) {
-        this.produitProperty.set(produitProperty);
-    }
+	public ObjectProperty<Produit> produitPropertyProperty() {
+		return produitProperty;
+	}
+
+	public void setProduitProperty(Produit produitProperty) {
+		this.produitProperty.set(produitProperty);
+	}
 }
