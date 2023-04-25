@@ -49,7 +49,7 @@ public class ProductsController {
 	@FXML
 	private void initialize() {
 		// Initialize the Product table with the two columns.
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue()._nomproduitProperty());
 		ProductTable.setItems(FXCollections.observableList(products));
 
 		// Listen for selection changes and show the Product details when changed.
@@ -61,7 +61,7 @@ public class ProductsController {
 	 * Fills all text fields to show details about the Product. If the specified
 	 * Product is null, all text fields are cleared.
 	 *
-	 * @param Product the Product or null
+	 * @param product the Product or null
 	 */
 	private void showProductDetails(Produit product) {
 		if (product != null) {

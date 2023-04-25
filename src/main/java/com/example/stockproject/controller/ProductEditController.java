@@ -52,7 +52,7 @@ public class ProductEditController {
 			this.product.set_stock(Integer.parseInt(stockLabel.getText()));
 			this.product.set_isActive(isActiveCheckBox.isSelected());
 
-			if (productDAO.find(this.product.get_idProduit()) != null) {
+			if (productDAO.find(this.product.get_idproduit()) != null) {
 				productDAO.update(this.product);
 			} else {
 				productDAO.create(this.product);

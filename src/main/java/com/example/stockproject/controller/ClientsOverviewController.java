@@ -1,5 +1,6 @@
 package com.example.stockproject.controller;
 
+import com.example.stockproject.Main;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-import com.example.stockproject.HelloApplication;
+
 import com.example.stockproject.dao.implement.ClientDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Client;
@@ -51,7 +52,7 @@ public class ClientsOverviewController {
     @FXML
     private void initialize() {
     	// Initialize the Client table with the two columns.
-        nameColumn.setCellValueFactory(cellData -> cellData.getValue()._nomPropertyProperty());
+        nameColumn.setCellValueFactory(cellData -> cellData.getValue()._nomProperty());
         ClientTable.setItems(FXCollections.observableList(clients));
         
      // Listen for selection changes and show the person details when changed.
@@ -68,11 +69,11 @@ public class ClientsOverviewController {
     private void showClientDetails(Client client) {
         if (client != null) {
             // Fill the labels with info from the person object.
-            nameLabel.setText(client.get_nomClient());
+            nameLabel.setText(client.get_nom());
             nissLabel.setText(client.get_NISS());
             emailLabel.setText(client.get_email());
             adresseLabel.setText(client.get_adresse());
-            isActiveCheckBox.setSelected(client.is_isActive());
+            isActiveCheckBox.setSelected(client.get_isActive());
         } else {
             // Person is null, remove all the text.
             nameLabel.setText("");
@@ -94,7 +95,7 @@ public class ClientsOverviewController {
     	Client newClient = null;
    	 try {
 	        // Load the fxml file and create a new stage for the popup dialog.
-	        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("ClientEdit.fxml"));
+	        FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClientEdit.fxml"));
 	        AnchorPane addClient = (AnchorPane) loader.load();
 
 	        // Create the dialog Stage.
@@ -122,7 +123,7 @@ public class ClientsOverviewController {
         if (selectedPerson != null) {
         	 try {
         	        // Load the fxml file and create a new stage for the popup dialog.
-        	        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("ClientEdit.fxml"));
+        	        FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClientEdit.fxml"));
         	        AnchorPane editClient = (AnchorPane) loader.load();
 
         	        // Create the dialog Stage.
@@ -155,7 +156,7 @@ public class ClientsOverviewController {
     @FXML
     private void cancel() {
     	try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("Home.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("Home.fxml"));
             AnchorPane home = (AnchorPane) loader.load();
             Stage stage = (Stage) previous.getScene().getWindow();
             stage.setScene(new Scene(home));

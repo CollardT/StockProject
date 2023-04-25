@@ -46,7 +46,7 @@ public class ClientsController {
 	 */
 	@FXML
 	private void initialize() {
-		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
+		nameColumn.setCellValueFactory(cellData -> cellData.getValue()._nomProperty());
 		ClientTable.setItems(FXCollections.observableList(clients));
 		ClientTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showClientDetails(newValue));
@@ -56,7 +56,7 @@ public class ClientsController {
 	 * Récupère les informations de la personne sélectionnée ou remet les champs
 	 * vides si personne n'est sélectionné
 	 *
-	 * @param person
+	 * @param client
 	 */
 	private void showClientDetails(Client client) {
 		if (client != null) {

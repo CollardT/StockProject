@@ -10,9 +10,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class Produit {
     private Integer _idproduit;
     private String _nom;
-
-
-
     private int _stock;
     private boolean _isActive;
     private IntegerProperty _idproduitProperty;
@@ -79,7 +76,7 @@ public class Produit {
         this._stock = _stock;
     }
 
-    public boolean is_isActive() {
+    public boolean get_isActive() {
         return _isActive;
     }
 
@@ -91,7 +88,7 @@ public class Produit {
         return _idproduitProperty.get();
     }
 
-    public IntegerProperty _idproduitPropertyProperty() {
+    public IntegerProperty _idproduitProperty() {
         return _idproduitProperty;
     }
 
@@ -103,7 +100,7 @@ public class Produit {
         return _nomproduitProperty.get();
     }
 
-    public StringProperty _nomproduitPropertyProperty() {
+    public StringProperty _nomproduitProperty() {
         return _nomproduitProperty;
     }
 
@@ -115,7 +112,7 @@ public class Produit {
         return _stockProperty.get();
     }
 
-    public IntegerProperty _stockPropertyProperty() {
+    public IntegerProperty _stockProperty() {
         return _stockProperty;
     }
 
@@ -127,7 +124,7 @@ public class Produit {
         return _isActiveProperty.get();
     }
 
-    public BooleanProperty _isActivePropertyProperty() {
+    public BooleanProperty _isActiveProperty() {
         return _isActiveProperty;
     }
 

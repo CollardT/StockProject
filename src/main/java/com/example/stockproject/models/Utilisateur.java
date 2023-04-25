@@ -60,7 +60,7 @@ public class Utilisateur {
         this._idUtilisateur.set(_idUtilisateur);
     }
     
-    public IntegerProperty idUtilisateurProperty() {
+    public IntegerProperty get_idUtilisateurProperty() {
     	return _idUtilisateur;
     }
 
@@ -72,7 +72,7 @@ public class Utilisateur {
         this._login.set(_login);
     }
     
-    public StringProperty loginProperty() {
+    public StringProperty get_loginProperty() {
     	return _login;
     }
 
@@ -84,7 +84,7 @@ public class Utilisateur {
         this._password.set(_password);
     }
     
-    public StringProperty passwordProperty() {
+    public StringProperty get_passwordProperty() {
     	return _password;
     }
 }

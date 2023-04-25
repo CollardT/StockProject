@@ -11,7 +11,7 @@ public class Client {
 
 
     private Integer _idClient;
-    private String _nomClient;
+    private String _nom;
     private String _NISS;
     private String _email;
     private String _adresse;
@@ -33,7 +33,7 @@ public class Client {
         return _nomProperty.get();
     }
 
-    public StringProperty _nomPropertyProperty() {
+    public StringProperty _nomProperty() {
         return _nomProperty;
     }
 
@@ -96,15 +96,15 @@ public class Client {
     private StringProperty _adresseProperty;
     private BooleanProperty _isActiveProperty;
 
-    public Client(Integer _idClient, String _nomClient, String _NISS, String _email, String _adresse, boolean _isActive) {
+    public Client(Integer _idClient, String _nom, String _NISS, String _email, String _adresse, boolean _isActive) {
         this._idClient = _idClient;
-        this._nomClient = _nomClient;
+        this._nom = _nom;
         this._NISS = _NISS;
         this._email = _email;
         this._adresse = _adresse;
         this._isActive = _isActive;
         this._idClientProperty = new SimpleIntegerProperty(_idClient);
-        this._nomProperty = new SimpleStringProperty(_nomClient);
+        this._nomProperty = new SimpleStringProperty(_nom);
         this._NISSProperty = new SimpleStringProperty(_NISS);
         this._emailProperty = new SimpleStringProperty(_email);
         this._adresseProperty = new SimpleStringProperty(_adresse);
@@ -126,12 +126,12 @@ public class Client {
         this._idClient = _idClient;
     }
 
-    public String get_nomClient() {
-        return _nomClient;
+    public String get_nom() {
+        return _nom;
     }
 
-    public void set_nomClient(String _nomClient) {
-        this._nomClient = _nomClient;
+    public void set_nom(String _nomClient) {
+        this._nom = _nomClient;
     }
 
     public String get_NISS() {
@@ -158,7 +158,7 @@ public class Client {
         this._adresse = _adresse;
     }
 
-    public boolean is_isActive() {
+    public boolean get_isActive() {
         return _isActive;
     }
 
