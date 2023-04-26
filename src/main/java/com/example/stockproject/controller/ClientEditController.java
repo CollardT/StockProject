@@ -5,7 +5,9 @@ import java.io.IOException;
 import com.example.stockproject.dao.implement.ClientDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Client;
+import com.example.stockproject.models.Utilisateur;
 
+import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,7 +16,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ClientEditController {
+public class ClientEditController implements ControllerInterface {
 
 	// Déclaration des éléments FXML lié au controlleur
 	@FXML
@@ -36,6 +38,7 @@ public class ClientEditController {
 
 	private Client client;
 	private ClientDAO clientDAO = (ClientDAO) DAOFactory.getClientDao();
+	private Utilisateur user;
 
 	/**
 	 * Lie le client qui doit être édité/créé. Si celui-ci est null, remet les
@@ -134,5 +137,9 @@ public class ClientEditController {
 	private void cancel() {
 		Stage thisWindow = (Stage) quit.getScene().getWindow();
 		thisWindow.close();
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 }

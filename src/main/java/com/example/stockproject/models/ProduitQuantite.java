@@ -1,6 +1,5 @@
 package com.example.stockproject.models;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,7 +10,7 @@ public class ProduitQuantite {
 	private int quantite;
 
 	private ObjectProperty<Produit> produitProperty;
-	private IntegerProperty quantiteProperty;
+	private ObjectProperty<Integer> quantiteProperty;
 
 	public ProduitQuantite() {
 
@@ -22,14 +21,14 @@ public class ProduitQuantite {
 		this.quantite = quantite;
 
 		produitProperty = new SimpleObjectProperty<>(produit);
-		quantiteProperty = new SimpleIntegerProperty(quantite);
+		quantiteProperty = new SimpleIntegerProperty(quantite).asObject();
 	}
 
 	public int getQuantiteProperty() {
 		return quantiteProperty.get();
 	}
 
-	public IntegerProperty quantitePropertyProperty() {
+	public ObjectProperty<Integer> quantiteProperty() {
 		return quantiteProperty;
 	}
 
@@ -57,7 +56,7 @@ public class ProduitQuantite {
 		return produitProperty.get();
 	}
 
-	public ObjectProperty<Produit> produitPropertyProperty() {
+	public ObjectProperty<Produit> produitProperty() {
 		return produitProperty;
 	}
 

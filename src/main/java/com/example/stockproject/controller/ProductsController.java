@@ -7,8 +7,10 @@ import com.example.stockproject.Main;
 import com.example.stockproject.dao.implement.ProduitDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Produit;
+import com.example.stockproject.models.Utilisateur;
 import com.example.stockproject.utilities.CreateScene;
 
+import interfaces.ControllerInterface;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ProductsController {
+public class ProductsController implements ControllerInterface {
 
 	@FXML
 	private TableView<Produit> ProductTable;
@@ -41,6 +43,7 @@ public class ProductsController {
 
 	private ProduitDAO productsDAO = (ProduitDAO) DAOFactory.getProduitDao();
 	private List<Produit> products = productsDAO.findall();
+	private Utilisateur user;
 
 	/**
 	 * Initializes the controller class. This method is automatically called after
@@ -48,11 +51,11 @@ public class ProductsController {
 	 */
 	@FXML
 	private void initialize() {
-		// Initialize the Product table with the two columns.
+		// Initialize la table des produits
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
 		ProductTable.setItems(FXCollections.observableList(products));
 
-		// Listen for selection changes and show the Product details when changed.
+		// Ajoute un écouteur pour afficher les infos du produit sélectionné
 		ProductTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showProductDetails(newValue));
 	}
@@ -158,14 +161,12 @@ public class ProductsController {
 
 	@FXML
 	private void cancel() {
-//    	try {
-//            FXMLLoader loader = new FXMLLoader(Main.class.getResource("Home.fxml"));
-//            AnchorPane home = (AnchorPane) loader.load();
-//            Stage stage = (Stage) previous.getScene().getWindow();
-//            stage.setScene(new Scene(home));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-		CreateScene.createNewScene("Home", quit, "home");
+
+		ControllerInterface ctrl = new HomeController();
+		CreateScene.createNewScene("Home", quit, "home", ctrl, user);
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 }

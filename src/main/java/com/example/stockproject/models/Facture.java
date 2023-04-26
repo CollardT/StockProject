@@ -8,21 +8,65 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Facture {
+
+	private int _idFacture;
+	private Client _client;
+	private Utilisateur _utilisateur;
+	private List<ProduitQuantite> _produitQuantite;
+
+	private String _nameFacture;
+
+	private ListProperty<ProduitQuantite> _produitQuantiteProperty;
+	private IntegerProperty _idFactureProperty;
+	private ObjectProperty<Client> _clientProperty;
+	private ObjectProperty<Utilisateur> _utilisateurProperty;
+
+	private StringProperty _nameFactureProperty;
+
 	public Facture(int _idFacture, Client _client, Utilisateur _utilisateur, List<ProduitQuantite> _produitQuantite) {
 		this._idFacture = _idFacture;
 		this._client = _client;
 		this._utilisateur = _utilisateur;
 		this._produitQuantite = _produitQuantite;
+		//
+		this._nameFacture = "Test";
 
 		_idFactureProperty = new SimpleIntegerProperty(_idFacture);
 		_clientProperty = new SimpleObjectProperty<>(_client);
 		_utilisateurProperty = new SimpleObjectProperty<>(_utilisateur);
 		_produitQuantiteProperty = new SimpleListProperty<>(FXCollections.observableList(_produitQuantite));
+		//
+		_nameFactureProperty = new SimpleStringProperty("Test");
 	}
+
+	// Test
+	public String get_nameFacture() {
+		return _nameFacture;
+	}
+
+	public void set_nameFacture(String _nameFacture) {
+		this._nameFacture = _nameFacture;
+	}
+
+	public String get_nameFactureProperty() {
+		return _nameFactureProperty.get();
+	}
+
+	public void set_nameFactureProperty(String _nameFacture) {
+		this._nameFactureProperty.set(_nameFacture);
+	}
+
+	public StringProperty nameFactureProperty() {
+		return _nameFactureProperty;
+	}
+
+	//
 
 	public Facture() {
 		this._idFacture = 0;
@@ -64,7 +108,7 @@ public class Facture {
 		return _produitQuantiteProperty.get();
 	}
 
-	public ListProperty<ProduitQuantite> _produitQuantitePropertyProperty() {
+	public ListProperty<ProduitQuantite> produitQuantiteProperty() {
 		return _produitQuantiteProperty;
 	}
 
@@ -76,24 +120,19 @@ public class Facture {
 		return _idFactureProperty.get();
 	}
 
-	public IntegerProperty _idFacturePropertyProperty() {
+	public IntegerProperty idFactureProperty() {
 		return _idFactureProperty;
 	}
 
-	public void set_idFactureProperty(int _idFactureProperty) {
-		this._idFactureProperty.set(_idFactureProperty);
+	public void set_idFactureProperty(int _idFacture) {
+		this._idFactureProperty.set(_idFacture);
 	}
-
-	private int _idFacture;
-	private Client _client;
-	private Utilisateur _utilisateur;
-	private List<ProduitQuantite> _produitQuantite;
 
 	public Client get_clientProperty() {
 		return _clientProperty.get();
 	}
 
-	public ObjectProperty<Client> _clientPropertyProperty() {
+	public ObjectProperty<Client> clientProperty() {
 		return _clientProperty;
 	}
 
@@ -105,17 +144,12 @@ public class Facture {
 		return _utilisateurProperty.get();
 	}
 
-	public ObjectProperty<Utilisateur> _utilisateurPropertyProperty() {
+	public ObjectProperty<Utilisateur> utilisateurProperty() {
 		return _utilisateurProperty;
 	}
 
 	public void set_utilisateurProperty(Utilisateur _utilisateurProperty) {
 		this._utilisateurProperty.set(_utilisateurProperty);
 	}
-
-	private ListProperty<ProduitQuantite> _produitQuantiteProperty;
-	private IntegerProperty _idFactureProperty;
-	private ObjectProperty<Client> _clientProperty;
-	private ObjectProperty<Utilisateur> _utilisateurProperty;
 
 }

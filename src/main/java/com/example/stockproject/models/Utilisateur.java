@@ -26,12 +26,18 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(String _login, String _password) {
+		this._login = _login;
+		this._password = _password;
+
 		this._loginProperty = new SimpleStringProperty(_login);
 		this._passwordProperty = new SimpleStringProperty(_password);
 		this._role = setpermissions("SELLER");
 	}
 
 	public Utilisateur(int _idUtilisateur, String _login, String _password, String _role) {
+		this._login = _login;
+		this._password = _password;
+
 		this._idUtilisateurProperty = new SimpleIntegerProperty(_idUtilisateur);
 		this._loginProperty = new SimpleStringProperty(_login);
 		this._passwordProperty = new SimpleStringProperty(_password);

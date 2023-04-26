@@ -31,7 +31,7 @@
             <ComboBox fx:id="ProductsList" prefWidth="150.0" GridPane.rowIndex="5" />
             <Label text="Quantité" GridPane.rowIndex="6" />
             <TextField fx:id="QuantityLabel" maxWidth="60.0" prefWidth="60.0" GridPane.rowIndex="7" />
-            <Button fx:id="addProduct" mnemonicParsing="false" text="Ajouter" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" onAction="#addToBill" />
+            <Button fx:id="addProduct" mnemonicParsing="false" onAction="#addToBill" text="Ajouter" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
       <TableView fx:id="BillsTable" layoutX="329.0" layoutY="26.0" prefHeight="292.0" prefWidth="260.0">
@@ -41,6 +41,6 @@
         </columns>
       </TableView>
       <Button fx:id="confirm" layoutX="343.0" layoutY="343.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" text="Confirmer" />
-      <Button fx:id="cancel" layoutX="459.0" layoutY="343.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="70.0" text="Annuler" />
+      <Button fx:id="quit" layoutX="459.0" layoutY="343.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="70.0" text="Annuler" />
    </children>
 </AnchorPane>

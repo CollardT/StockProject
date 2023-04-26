@@ -7,8 +7,10 @@ import com.example.stockproject.Main;
 import com.example.stockproject.dao.implement.ClientDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Client;
+import com.example.stockproject.models.Utilisateur;
 import com.example.stockproject.utilities.CreateScene;
 
+import interfaces.ControllerInterface;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ClientsController {
+public class ClientsController implements ControllerInterface {
 
 	// Déclaration des éléments FXML lié au controlleur
 	@FXML
@@ -40,6 +42,7 @@ public class ClientsController {
 
 	private ClientDAO clientsDAO = (ClientDAO) DAOFactory.getClientDao();
 	private List<Client> clients = clientsDAO.findall();
+	private Utilisateur user;
 
 	/**
 	 * Initialise le controlleur et le tableau de clients
@@ -158,14 +161,12 @@ public class ClientsController {
 	 */
 	@FXML
 	private void cancel() {
-//    	try {
-//            FXMLLoader loader = new FXMLLoader(Main.class.getResource("Home.fxml"));
-//            AnchorPane home = (AnchorPane) loader.load();
-//            Stage stage = (Stage) previous.getScene().getWindow();
-//            stage.setScene(new Scene(home));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-		CreateScene.createNewScene("Home", quit, "home");
+
+		ControllerInterface ctrl = new HomeController();
+		CreateScene.createNewScene("Home", quit, "home", ctrl, user);
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 }

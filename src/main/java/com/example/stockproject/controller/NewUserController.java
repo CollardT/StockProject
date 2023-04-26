@@ -5,6 +5,7 @@ import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Utilisateur;
 import com.example.stockproject.utilities.CreateScene;
 
+import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -12,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-public class NewUserController {
+public class NewUserController implements ControllerInterface {
 
 	// Déclaration des éléments FXML lié au controlleur
 	@FXML
@@ -26,6 +27,7 @@ public class NewUserController {
 
 	// Regex de vérification mail
 	private String passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$";
+	private Utilisateur user;
 
 	/**
 	 * Créé un nouvel utilisateur après avoir vérifier si les mots de passes
@@ -78,14 +80,12 @@ public class NewUserController {
 	 */
 	@FXML
 	private void close() {
-//		try {
-//            FXMLLoader loader = new FXMLLoader(Main.class.getResource("Home.fxml"));
-//            AnchorPane home = (AnchorPane) loader.load();
-//            Stage root = (Stage) cancel.getScene().getWindow();
-//            root.setScene(new Scene(home));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-		CreateScene.createNewScene("Home", quit, "home");
+
+		ControllerInterface ctrl = new HomeController();
+		CreateScene.createNewScene("Home", quit, "home", ctrl, user);
+	}
+
+	public void setUser(Utilisateur user) {
+		this.user = user;
 	}
 }

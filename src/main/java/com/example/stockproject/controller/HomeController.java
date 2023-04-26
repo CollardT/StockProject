@@ -1,20 +1,17 @@
 package com.example.stockproject.controller;
 
-import java.io.IOException;
-
-import com.example.stockproject.Main;
 import com.example.stockproject.models.Utilisateur;
 import com.example.stockproject.utilities.CreateScene;
 
+import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 
-public class HomeController {
+public class HomeController implements ControllerInterface {
 
 	// Déclaration des éléments FXML lié au controlleur
 	@FXML
-	private Button clients, products, bills, newBill, newUser, quit;
+	private Button clients, products, bills, newBill, newUser, quit, test;
 
 	private Utilisateur user;
 
@@ -24,15 +21,9 @@ public class HomeController {
 	 */
 	@FXML
 	private void openClientsList() {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(Main.class.getResource("Clients.fxml"));
-//			AnchorPane clientsList = (AnchorPane) loader.load();
-//			Stage root = (Stage) clients.getScene().getWindow();
-//			root.setScene(new Scene(clientsList));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		CreateScene.createNewScene("Clients", clients, "clients");
+
+		ControllerInterface ctrl = new ClientsController();
+		CreateScene.createNewScene("Clients", clients, "clients", ctrl, user);
 	}
 
 	/**
@@ -41,15 +32,9 @@ public class HomeController {
 	 */
 	@FXML
 	private void openProductsList() {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(Main.class.getResource("Products.fxml"));
-//			AnchorPane productsList = (AnchorPane) loader.load();
-//			Stage root = (Stage) products.getScene().getWindow();
-//			root.setScene(new Scene(productsList));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		CreateScene.createNewScene("Products", products, "products");
+
+		ControllerInterface ctrl = new ProductsController();
+		CreateScene.createNewScene("Products", products, "products", ctrl, user);
 	}
 
 	/**
@@ -58,15 +43,9 @@ public class HomeController {
 	 */
 	@FXML
 	private void openBillsList() {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(Main.class.getResource("Bills.fxml"));
-//			AnchorPane billsList = (AnchorPane) loader.load();
-//			Stage root = (Stage) bills.getScene().getWindow();
-//			root.setScene(new Scene(billsList));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		CreateScene.createNewScene("Bills", bills, "bills");
+
+		ControllerInterface ctrl = new BillsController();
+		CreateScene.createNewScene("Bills", bills, "bills", ctrl, user);
 	}
 
 	/**
@@ -74,24 +53,24 @@ public class HomeController {
 	 * 
 	 */
 	@FXML
-	private void openNewBill() throws IOException {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(Main.class.getResource("NewBill.fxml"));
-//			AnchorPane newBillWindow = (AnchorPane) loader.load();
-//			Stage root = (Stage) newBill.getScene().getWindow();
-//			root.setScene(new Scene(newBillWindow));
-//
-//			NewBillController controller = loader.getController();
-//			controller.setUser(this.user);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		CreateScene.createNewScene("NewBill", newBill, "newBill");
+	private void openNewBill() {
 
-		FXMLLoader loader = new FXMLLoader(Main.class.getResource("Home.fxml"));
-		loader.load();
-		NewBillController controller = loader.getController();
-		controller.setUser(this.user);
+		ControllerInterface ctrl = new NewBillController();
+		CreateScene.createNewScene("NewBill", newBill, "newBill", ctrl, user);
+
+//		FXMLLoader loader = new FXMLLoader(Main.class.getResource("NewBill.fxml"));
+//		Parent root = loader.load();
+//		Scene scene = new Scene(root);
+//		String css = Main.class.getResource("CSS/generalCSS.css").toExternalForm();
+//		String css2 = Main.class.getResource("CSS/newBill.css").toExternalForm();
+//		scene.getStylesheets().add(css);
+//		scene.getStylesheets().add(css2);
+//		Stage window = (Stage) newBill.getScene().getWindow();
+//		NewBillController controller = loader.getController();
+//		controller.setUser(this.user);
+//		window.setScene(scene);
+//		window.show();
+
 	}
 
 	/**
@@ -100,15 +79,9 @@ public class HomeController {
 	 */
 	@FXML
 	private void openNewUser() {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(Main.class.getResource("NewUser.fxml"));
-//			AnchorPane newUserWindow = (AnchorPane) loader.load();
-//			Stage root = (Stage) newUser.getScene().getWindow();
-//			root.setScene(new Scene(newUserWindow));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		CreateScene.createNewScene("NewUser", newUser, "newUser");
+
+		ControllerInterface ctrl = new NewUserController();
+		CreateScene.createNewScene("NewUser", newUser, "newUser", ctrl, user);
 	}
 
 	/**
@@ -117,15 +90,9 @@ public class HomeController {
 	 */
 	@FXML
 	private void disconnect() {
-//		try {
-//			FXMLLoader loader = new FXMLLoader(Main.class.getResource("Login.fxml"));
-//			AnchorPane login = (AnchorPane) loader.load();
-//			Stage root = (Stage) quit.getScene().getWindow();
-//			root.setScene(new Scene(login));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		CreateScene.createNewScene("Login", quit, "login");
+
+		ControllerInterface ctrl = new LoginController();
+		CreateScene.createNewScene("Login", quit, "login", ctrl, user);
 	}
 
 	/**
@@ -135,6 +102,5 @@ public class HomeController {
 	 */
 	public void setUser(Utilisateur user) {
 		this.user = user;
-		this.user.set_login(user.get_login());
 	}
 }
