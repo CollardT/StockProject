@@ -42,7 +42,7 @@ public class LoginController {
 		String name = login.getText();
 		Utilisateur user = userDAO.findByName(name);
 		if (user != null) {
-			if (user.get_passwordProperty().equals(password.getText())) {
+			if (user.get_passwordProperty().getValue().equals(password.getText())) {
 
 				CreateScene.createNewScene("Home", connect, "home");
 
@@ -51,6 +51,7 @@ public class LoginController {
 				HomeController controller = loader.getController();
 				controller.setUser(user);
 			} else {
+				System.out.println(user.get_passwordProperty()+"="+user.get_password());
 				Alert error = new Alert(AlertType.ERROR);
 				error.setTitle("ERROR");
 				error.setContentText("Error Login / Password");

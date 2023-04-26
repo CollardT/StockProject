@@ -15,6 +15,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         super(conn);
     }
 
+    /**
+     * Crée un utilisateur dans la table utilisateur selon un objet utilisateur
+     * @param obj : Utilisateur à créer dans la BDD
+     * @return
+     */
     @Override
     public boolean create(Utilisateur obj) {
         try {
@@ -35,6 +40,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         }
     }
 
+    /**
+     * Supprime un utilisateur de la table utilisateur mais si celui-ci est utilisé dans une facture alors sa variable
+     * isActive est mise sur 0.
+     * @param obj : Utilisateur à supprimer dans la BDD
+     * @return
+     */
     @Override
     public boolean delete(Utilisateur obj) {
         try {
@@ -68,6 +79,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 
     }
 
+    /**
+     * Met à jour l'utilisateur selon l'ojet utilisateur fourni
+     * @param obj : Utilisateur à modifier dans la BDD
+     * @return
+     */
     @Override
     public boolean update(Utilisateur obj) {
         try {
@@ -91,8 +107,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
     }
 
     /**
-     * Retourne un utilisateur de la base de données
-     * @param id : index de l'utilisateur à chercher
+     * Retourne un utilisateur de la base de données selon son id et crée un objet utilisateur correspondant
      * @return
      */
     @Override
@@ -128,6 +143,10 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         }
     }
 
+    /**
+     * Retourne un utilisateur de la base de données selon son nom et crée un objet utilisateur correspondant
+     * @return
+     */
     public Utilisateur findByName(String name) {
         Utilisateur utilisateur = null;
         try {
@@ -158,7 +177,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             return null;
         }
     }
-    
+
+    /**
+     * Retourne tout les utilisateurs de table utilisateur
+     * @return
+     */
     @Override
     public List<Utilisateur> findall() {
         try {
@@ -184,6 +207,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             return null;
         }
     }
+
+    /**
+     * Vérifie si un utilisateur est présent dans une facture.
+     * @param obj
+     * @return
+     */
     public boolean checkforuser(Utilisateur obj){
         try{
             conn.setAutoCommit(false);

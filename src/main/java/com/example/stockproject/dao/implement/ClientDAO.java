@@ -48,7 +48,7 @@ public class ClientDAO extends DAO<Client> {
 
 	/**
 	 * Met à jour un client à partir d'un objet Client en changeant la variable
-	 * isActive vers false
+	 * isActive vers false et supprime celui-ci si le client est présent dans une facture.
 	 * 
 	 * @param obj : Objet à supprimer dans la BDD
 	 * @return
@@ -80,6 +80,11 @@ public class ClientDAO extends DAO<Client> {
 		}
 	}
 
+	/**
+	 * Met à jour un client avec un object client contenant les modifications de ses données.
+	 * @param obj : Objet à modifier dans la BDD
+	 * @return
+	 */
 	@Override
 	public boolean update(Client obj) {
 		try {
@@ -106,8 +111,7 @@ public class ClientDAO extends DAO<Client> {
 	}
 
 	/**
-	 * Cherche un client par son id
-	 * 
+	 * Cherche un client par son id et créée un object client
 	 * @param id : index du client à chercher
 	 * @return
 	 */
@@ -132,6 +136,11 @@ public class ClientDAO extends DAO<Client> {
 		}
 	}
 
+	/**
+	 * Cherche un client par son nom et créée un object client contenant ses informations.
+	 * @param name
+	 * @return
+	 */
 	public Client findbyname(String name) {
 		Client client = null;
 		try {
@@ -154,9 +163,9 @@ public class ClientDAO extends DAO<Client> {
 	}
 
 	/**
-	 * Récupère la liste de tous les clients
+	 * Récupère la liste de tous les clients et créée une liste de clients
 	 * 
-	 * @return
+	 * @return List<Client>
 	 */
 	@Override
 	public List<Client> findall() {
