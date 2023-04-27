@@ -12,6 +12,7 @@ import com.example.stockproject.models.Facture;
 import com.example.stockproject.models.ProduitQuantite;
 
 public class FactureDAO extends DAO<Facture> {
+
 	private UtilisateurDAO utilisateurDAO;
 	private ProduitDAO produitDAO;
 	private ClientDAO clientDAO;
@@ -25,7 +26,8 @@ public class FactureDAO extends DAO<Facture> {
 
 	/**
 	 * Créer une facture dans la table facture tout en mettant à jour la table
-	 * produit_facture
+	 * produit_facture La création nécessite de faire une liste et d'insérer les
+	 * éléments de produit_facture au travers d'une boucle
 	 * 
 	 * @param obj : objet à créer dans la BDD
 	 * @return
@@ -35,6 +37,11 @@ public class FactureDAO extends DAO<Facture> {
 		try {
 			if (!obj.get_produitQuantite().isEmpty()) {
 				conn.setAutoCommit(false);
+				// Statement.RETURN_GENERATED_KEYS --> Récupère toutes les informations générés
+				// par l'insertion dans notre base de données. On peut réutilisé ces données
+				// avec
+				// getGeneratedKeys qui contient toutes les colonnes de la ligne générés qui
+				// dans notre cas contient l'id de la facture pour facture produit
 				PreparedStatement ps = conn.prepareStatement(
 						"INSERT INTO `facture`(`id_client`,`id_utilisateur`) VALUES (?,?);",
 						Statement.RETURN_GENERATED_KEYS);
@@ -46,22 +53,29 @@ public class FactureDAO extends DAO<Facture> {
 					int id_facture = genkeys.getInt(1);
 					obj.get_produitQuantite().forEach(entry -> {
 						try {
-
-							PreparedStatement ps2 = conn.prepareStatement(
-									"INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
-							ps2.setInt(1, id_facture);
-							ps2.setInt(2, entry.getProduit().get_idProduit());
-							ps2.setInt(3, entry.getQuantite());
-							ps2.executeUpdate();
-							ps2.close();
-							PreparedStatement ps3 = conn
-									.prepareStatement("UPDATE produit SET stock = stock - ? WHERE id_produit =?;");
-							ps3.setInt(1, entry.getQuantite());
-							ps3.setInt(2, entry.getProduit().get_idProduit());
-							ps3.executeUpdate();
-
+							// Check de la quantite de stock avant d'appliquer celle-ci à la base de données
+							if (this.produitDAO.find(entry.getProduit().get_idProduit()).get_stock() > entry
+									.getQuantite()) {
+								PreparedStatement ps2 = conn.prepareStatement(
+										"INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
+								ps2.setInt(1, id_facture);
+								ps2.setInt(2, entry.getProduit().get_idProduit());
+								ps2.setInt(3, entry.getQuantite());
+								ps2.executeUpdate();
+								ps2.close();
+								PreparedStatement ps3 = conn
+										.prepareStatement("UPDATE produit SET stock = stock - ? WHERE id_produit =?;");
+								ps3.setInt(1, entry.getQuantite());
+								ps3.setInt(2, entry.getProduit().get_idProduit());
+								ps3.executeUpdate();
+								ps3.close();
+							} else {
+								throw new Exception(
+										"Pas assez de stock de l'article" + entry.getProduit().get_idProduit());
+							}
 						} catch (Exception e) {
 							e.printStackTrace();
+							return;
 						}
 					});
 				}
@@ -86,18 +100,42 @@ public class FactureDAO extends DAO<Facture> {
 	}
 
 	/**
-	 * non nécessaire pour les factures car elle ne doivent pas être supprimée
+	 * Supprime une facture ainsi que ses entrées dans produit_facture au travers de
+	 * 2 requête sql delete et avec un ensemble de requête qui rajoute les éléments
+	 * au stock à noter que vérifier si une facture impacte les autres tables n'est
+	 * pas nécessaire car les factures sont indépendantes des autres tables.
 	 * 
 	 * @param obj : Objet à supprimer dans la BDD
 	 * @return
 	 */
 	@Override
 	public boolean delete(Facture obj) {
-		return false;
+		try {
+			if (!obj.get_produitQuantite().isEmpty()) {
+				for (ProduitQuantite i : obj.get_produitQuantite()) {
+					this.produitDAO.addback(i.getProduit(), i.getQuantite());
+				}
+			}
+			conn.setAutoCommit(false);
+			PreparedStatement psdfp = conn.prepareStatement("DELETE FROM produit_facture WHERE id_produit = ?");
+			psdfp.setInt(1, obj.get_idFacture());
+			psdfp.executeUpdate();
+			psdfp.close();
+			PreparedStatement psdf = conn.prepareStatement("DELETE FROM facture WHERE id_facture = ?");
+			psdf.setInt(1, obj.get_idFacture());
+			psdf.executeUpdate();
+			psdf.close();
+			conn.setAutoCommit(true);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	/**
-	 * Modifie les informations de la facture
+	 * Modifie les informations de la facture ainsi que les éléments de table
+	 * produit_facture
 	 * 
 	 * @param obj : Objet à modifier dans la BDD
 	 * @return
@@ -182,10 +220,8 @@ public class FactureDAO extends DAO<Facture> {
 	}
 
 	/**
-	 * retourne la liste des factures avec les produits vendus par dans chaque
-	 * facture
-	 * 
-	 * @return
+	 * retourne la liste de toutes les factures avec les produits vendus par dans
+	 * chaque factures
 	 */
 	@Override
 	public List<Facture> findall() {

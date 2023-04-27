@@ -14,6 +14,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		super(conn);
 	}
 
+	/**
+	 * Crée un utilisateur dans la table utilisateur selon un objet utilisateur
+	 * 
+	 * @param obj : Utilisateur à créer dans la BDD
+	 * @return
+	 */
 	@Override
 	public boolean create(Utilisateur obj) {
 		try {
@@ -34,11 +40,50 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
+	/**
+	 * Supprime un utilisateur de la table utilisateur mais si celui-ci est utilisé
+	 * dans une facture alors sa variable isActive est mise sur 0.
+	 * 
+	 * @param obj : Utilisateur à supprimer dans la BDD
+	 * @return
+	 */
 	@Override
 	public boolean delete(Utilisateur obj) {
-		return false;
+		try {
+			if (checkforuser(obj)) {
+				conn.setAutoCommit(false);
+				PreparedStatement ps = conn
+						.prepareStatement("UPDATE utilisateur SET isActive = ? WHERE id_utilisateur =?");
+				ps.setBoolean(1, false);
+				ps.setInt(2, obj.get_idUtilisateur());
+				ps.executeUpdate();
+				ps.close();
+				conn.commit();
+				conn.setAutoCommit(true);
+				return true;
+			} else {
+				conn.setAutoCommit(false);
+				PreparedStatement ps = conn.prepareStatement("DELETE FROM utilisateur WHERE id_utilisateur =?");
+				ps.setInt(1, obj.get_idUtilisateur());
+				ps.executeUpdate();
+				ps.close();
+				conn.commit();
+				conn.setAutoCommit(true);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
+	/**
+	 * Met à jour l'utilisateur selon l'ojet utilisateur fourni
+	 * 
+	 * @param obj : Utilisateur à modifier dans la BDD
+	 * @return
+	 */
 	@Override
 	public boolean update(Utilisateur obj) {
 		try {
@@ -62,7 +107,8 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	}
 
 	/**
-	 * Retourne un utilisateur de la base de données
+	 * Retourne un utilisateur de la base de données selon son id et crée un objet
+	 * utilisateur correspondant
 	 * 
 	 * @param id : index de l'utilisateur à chercher
 	 * @return
@@ -93,6 +139,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
+	/**
+	 * Retourne un utilisateur de la base de données selon son nom et crée un objet
+	 * utilisateur correspondant
+	 * 
+	 * @return
+	 */
 	public Utilisateur findByName(String name) {
 		Utilisateur utilisateur = null;
 		try {
@@ -118,6 +170,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		}
 	}
 
+	/**
+	 * Retourne tout les utilisateurs de table utilisateur
+	 * 
+	 * @return
+	 */
 	@Override
 	public List<Utilisateur> findall() {
 		try {
@@ -136,6 +193,35 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	/**
+	 * Vérifie si un utilisateur est présent dans une facture.
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	public boolean checkforuser(Utilisateur obj) {
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement state = conn.prepareStatement("SELECT * FROM facture WHERE id_utilisateur=?");
+			state.setInt(1, obj.get_idUtilisateur());
+			ResultSet rs = state.executeQuery();
+			if (rs.next()) {
+				state.close();
+				conn.commit();
+				conn.setAutoCommit(true);
+				return true;
+			}
+			state.close();
+			conn.commit();
+			conn.setAutoCommit(true);
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+
 		}
 	}
 }

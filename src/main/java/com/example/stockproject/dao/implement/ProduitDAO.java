@@ -89,6 +89,23 @@ public class ProduitDAO extends DAO<Produit> {
 		}
 	}
 
+	public boolean addback(Produit obj, int toAddBack) {
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement psa = conn.prepareStatement("UPDATE produit set stock = stock + ? WHERE id_produit = ?");
+			psa.setInt(1, toAddBack);
+			psa.setInt(2, obj.get_idProduit());
+			psa.executeUpdate();
+			psa.close();
+			conn.commit();
+			conn.setAutoCommit(true);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	@Override
 	public Produit find(int id) {
 		Produit produit = null;

@@ -20,7 +20,15 @@ public class Produit {
 	private BooleanProperty _isActiveProperty;
 
 	public Produit() {
+		this._idProduit = 0;
+		this._nom = "";
+		this._stock = 0;
+		this._isActive = true;
 
+		this._idProduitProperty = new SimpleIntegerProperty();
+		this._nomProperty = new SimpleStringProperty();
+		this._stockProperty = new SimpleIntegerProperty();
+		this._isActiveProperty = new SimpleBooleanProperty();
 	}
 
 	public Produit(String _nom, int _stock) {
