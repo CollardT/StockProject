@@ -8,6 +8,7 @@ import com.example.stockproject.dao.implement.ClientDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Client;
 import com.example.stockproject.models.Utilisateur;
+import com.example.stockproject.utilities.CreateAlert;
 import com.example.stockproject.utilities.CreateScene;
 
 import interfaces.ControllerInterface;
@@ -15,8 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -148,11 +147,8 @@ public class ClientsController implements ControllerInterface {
 				e.printStackTrace();
 			}
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No Selection");
-			alert.setHeaderText("Pas de client séléctionné");
-			alert.setContentText("Merci de sélectionner un client dans la table.");
-			alert.showAndWait();
+			CreateAlert.createAlert("ERROR", "Empty client", "Pas de client séléctionné",
+					"Merci de sélectionner un client dans la table.");
 		}
 	}
 
@@ -161,7 +157,6 @@ public class ClientsController implements ControllerInterface {
 	 */
 	@FXML
 	private void cancel() {
-
 		ControllerInterface ctrl = new HomeController();
 		CreateScene.createNewScene("Home", quit, "home", ctrl, user);
 	}

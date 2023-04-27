@@ -35,6 +35,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(int _idUtilisateur, String _login, String _password, String _role) {
+		this._idUtilisateur = _idUtilisateur;
 		this._login = _login;
 		this._password = _password;
 

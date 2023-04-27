@@ -3,12 +3,11 @@ package com.example.stockproject.controller;
 import com.example.stockproject.dao.implement.UtilisateurDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Utilisateur;
+import com.example.stockproject.utilities.CreateAlert;
 import com.example.stockproject.utilities.CreateScene;
 
 import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -43,33 +42,20 @@ public class NewUserController implements ControllerInterface {
 					user.set_login(login.getText());
 					user.set_password(password.getText());
 					userDAO.create(user);
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setTitle("User create");
-					alert.setHeaderText("Création nouvel utilisateur");
-					alert.setContentText("Le nouvel utilisateur a bien été créé");
-					alert.showAndWait();
+					CreateAlert.createAlert("INFORMATION", "Utilisateur créé", "Création nouvel utilisateur",
+							"Le nouvel utilisateur a bien été créé");
 					CreateScene.createNewScene("Home", quit, "home");
 				} else {
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("Invalid Password");
-					alert.setHeaderText("Les password ne sont pas identique");
-					alert.setContentText("Merci de mettre des mots de passe identique.");
-					alert.showAndWait();
+					CreateAlert.createAlert("ERROR", "Mot de passe invalide", "Les password ne sont pas identique",
+							"Merci de mettre des mots de passe identique");
 				}
 			} else {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Mot de passe non sécurisé");
-				alert.setHeaderText("Mot de passe trop faible");
-				alert.setContentText(
+				CreateAlert.createAlert("WARNING", "Mot de passe non sécurisé", "Mot de passe trop faible",
 						"Votre mot de passe doit comporter une majuscule, un chiffre, un caractère spécial et être long de 6 caractère");
-				alert.showAndWait();
 			}
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Creation utilisateur error");
-			alert.setHeaderText("échec de la création d'utilisateur");
-			alert.setContentText("Rééssayer en changeant les paramètres");
-			alert.showAndWait();
+			CreateAlert.createAlert("ERROR", "Creation utilisateur error", "échec de la création d'utilisateur",
+					"Rééssayer en changeant les paramètres");
 		}
 
 	}
@@ -80,7 +66,6 @@ public class NewUserController implements ControllerInterface {
 	 */
 	@FXML
 	private void close() {
-
 		ControllerInterface ctrl = new HomeController();
 		CreateScene.createNewScene("Home", quit, "home", ctrl, user);
 	}

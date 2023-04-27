@@ -1,0 +1,9 @@
+.combo-box {
+    -fx-background-radius: 10px;
+}
+
+#quantityField {
+	-fx-border-style: solid outside;
+	-fx-border-width: 1;
+	-fx-text-fill: black;
+}

@@ -4,12 +4,11 @@ import com.example.stockproject.dao.implement.ProduitDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Produit;
 import com.example.stockproject.models.Utilisateur;
+import com.example.stockproject.utilities.CreateAlert;
 import com.example.stockproject.utilities.IsANumber;
 
 import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -83,15 +82,7 @@ public class ProductEditController implements ControllerInterface {
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			// Show the error message.
-			Alert alert = new Alert(AlertType.ERROR);
-			// alert.initOwner(editWindow);
-			alert.setTitle("Invalid Fields");
-			alert.setHeaderText("Please correct invalid fields");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
+			CreateAlert.createAlert("ERROR", "Champs Invalide", "Corrigez les champs invalides", errorMessage);
 			return false;
 		}
 	}

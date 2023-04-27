@@ -6,11 +6,10 @@ import com.example.stockproject.dao.implement.ClientDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Client;
 import com.example.stockproject.models.Utilisateur;
+import com.example.stockproject.utilities.CreateAlert;
 
 import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -116,13 +115,8 @@ public class ClientEditController implements ControllerInterface {
 		if (errorMessage.length() == 0) {
 			return true;
 		} else {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Erreur d'encodage");
-			alert.setHeaderText("Merci de vérifier les champs invalides");
-			alert.setContentText(errorMessage);
-
-			alert.showAndWait();
-
+			CreateAlert.createAlert("ERROR", "Erreur d'encodage", "Merci de vérifier les champs invalides",
+					errorMessage);
 			return false;
 		}
 	}

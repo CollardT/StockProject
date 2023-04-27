@@ -21,7 +21,6 @@ public class HomeController implements ControllerInterface {
 	 */
 	@FXML
 	private void openClientsList() {
-
 		ControllerInterface ctrl = new ClientsController();
 		CreateScene.createNewScene("Clients", clients, "clients", ctrl, user);
 	}
@@ -32,7 +31,6 @@ public class HomeController implements ControllerInterface {
 	 */
 	@FXML
 	private void openProductsList() {
-
 		ControllerInterface ctrl = new ProductsController();
 		CreateScene.createNewScene("Products", products, "products", ctrl, user);
 	}
@@ -43,7 +41,6 @@ public class HomeController implements ControllerInterface {
 	 */
 	@FXML
 	private void openBillsList() {
-
 		ControllerInterface ctrl = new BillsController();
 		CreateScene.createNewScene("Bills", bills, "bills", ctrl, user);
 	}
@@ -54,23 +51,8 @@ public class HomeController implements ControllerInterface {
 	 */
 	@FXML
 	private void openNewBill() {
-
 		ControllerInterface ctrl = new NewBillController();
 		CreateScene.createNewScene("NewBill", newBill, "newBill", ctrl, user);
-
-//		FXMLLoader loader = new FXMLLoader(Main.class.getResource("NewBill.fxml"));
-//		Parent root = loader.load();
-//		Scene scene = new Scene(root);
-//		String css = Main.class.getResource("CSS/generalCSS.css").toExternalForm();
-//		String css2 = Main.class.getResource("CSS/newBill.css").toExternalForm();
-//		scene.getStylesheets().add(css);
-//		scene.getStylesheets().add(css2);
-//		Stage window = (Stage) newBill.getScene().getWindow();
-//		NewBillController controller = loader.getController();
-//		controller.setUser(this.user);
-//		window.setScene(scene);
-//		window.show();
-
 	}
 
 	/**
@@ -79,7 +61,6 @@ public class HomeController implements ControllerInterface {
 	 */
 	@FXML
 	private void openNewUser() {
-
 		ControllerInterface ctrl = new NewUserController();
 		CreateScene.createNewScene("NewUser", newUser, "newUser", ctrl, user);
 	}
@@ -90,7 +71,6 @@ public class HomeController implements ControllerInterface {
 	 */
 	@FXML
 	private void disconnect() {
-
 		ControllerInterface ctrl = new LoginController();
 		CreateScene.createNewScene("Login", quit, "login", ctrl, user);
 	}

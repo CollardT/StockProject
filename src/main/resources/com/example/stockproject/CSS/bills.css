@@ -1,0 +1,14 @@
+#BillTable .table-row-cell:odd {
+	-fx-background-color: #CDC;
+}
+
+#BillTable .table-row-cell:even {
+	-fx-background-color: #CEC;
+}
+
+#ProductQuantityTable .table-row-cell:odd {
+	-fx-background-color: #9ECB91;
+}
+#mainPane {
+	-fx-background-color: #bbb;
+}

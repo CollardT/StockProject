@@ -1,5 +1,6 @@
 package com.example.stockproject.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
@@ -29,23 +30,31 @@ public class Facture {
 
 	private StringProperty _nameFactureProperty;
 
+	public Facture() {
+		Produit p = new Produit("", 0);
+		List<ProduitQuantite> list = new ArrayList<ProduitQuantite>();
+		ProduitQuantite pq = new ProduitQuantite(p, 0);
+		list.add(pq);
+		this._produitQuantite = list;
+
+		_produitQuantiteProperty = new SimpleListProperty<>(FXCollections.observableList(list));
+
+	}
+
 	public Facture(int _idFacture, Client _client, Utilisateur _utilisateur, List<ProduitQuantite> _produitQuantite) {
 		this._idFacture = _idFacture;
 		this._client = _client;
 		this._utilisateur = _utilisateur;
 		this._produitQuantite = _produitQuantite;
-		//
 		this._nameFacture = "Test";
 
 		_idFactureProperty = new SimpleIntegerProperty(_idFacture);
 		_clientProperty = new SimpleObjectProperty<>(_client);
 		_utilisateurProperty = new SimpleObjectProperty<>(_utilisateur);
 		_produitQuantiteProperty = new SimpleListProperty<>(FXCollections.observableList(_produitQuantite));
-		//
 		_nameFactureProperty = new SimpleStringProperty("Test");
 	}
 
-	// Test
 	public String get_nameFacture() {
 		return _nameFacture;
 	}
@@ -64,12 +73,6 @@ public class Facture {
 
 	public StringProperty nameFactureProperty() {
 		return _nameFactureProperty;
-	}
-
-	//
-
-	public Facture() {
-		this._idFacture = 0;
 	}
 
 	public int get_idFacture() {

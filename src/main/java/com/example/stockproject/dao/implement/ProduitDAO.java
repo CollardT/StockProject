@@ -110,6 +110,26 @@ public class ProduitDAO extends DAO<Produit> {
 		}
 	}
 
+	public Produit findByName(String name) {
+		Produit produit = null;
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit WHERE nom =?");
+			ps.setString(1, name);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				produit = new Produit(rs.getInt("id_produit"), rs.getString("nom"), rs.getInt("stock"),
+						rs.getBoolean("isActive"));
+			}
+			conn.commit();
+			conn.setAutoCommit(true);
+			return produit;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	@Override
 	public List<Produit> findall() {
 		List<Produit> produits;

@@ -23,6 +23,14 @@ public class Produit {
 
 	}
 
+	public Produit(String _nom, int _stock) {
+		this._nom = _nom;
+		this._stock = _stock;
+
+		this._nomProperty = new SimpleStringProperty(_nom);
+		this._stockProperty = new SimpleIntegerProperty(_stock);
+	}
+
 	public Produit(int _idProduit, String _nom, int _stock) {
 		this._idProduit = _idProduit;
 		this._nom = _nom;

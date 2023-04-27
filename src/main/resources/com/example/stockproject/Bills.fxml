@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockproject.controller.BillsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockproject.controller.BillsController">
    <children>
       <SplitPane dividerPositions="0.3394648829431438" layoutX="183.0" layoutY="85.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <TableView id="BillTable" fx:id="BillTable" layoutX="14.0" layoutY="38.0" prefHeight="398.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView id="BillTable" fx:id="BillTable" layoutX="14.0" layoutY="38.0" prefHeight="360.0" prefWidth="200.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn id="column" fx:id="billColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Factures" />
                     </columns>
@@ -22,16 +23,19 @@
                   </TableView>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane id="mainPane" minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="600.0">
                <children>
-                  <Label layoutX="154.0" layoutY="14.0" text="Détail Facture" />
-                  <TableView id="ProductQuantityTable" fx:id="ProductQuantityTable" layoutX="14.0" layoutY="40.0" prefHeight="264.0" prefWidth="368.0">
+                  <Label layoutX="126.0" layoutY="14.0" text="Détail Facture" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font></Label>
+                  <TableView id="ProductQuantityTable" fx:id="ProductQuantityTable" layoutX="14.0" layoutY="57.0" prefHeight="256.0" prefWidth="370.0">
                     <columns>
-                      <TableColumn fx:id="productsColumn" prefWidth="264.0" text="Articles" />
-                      <TableColumn fx:id="quantityColumn" minWidth="3.0" prefWidth="108.0" text="Quantité" />
+                      <TableColumn fx:id="productsColumn" maxWidth="240.0" minWidth="-Infinity" prefWidth="240.0" text="Articles" />
+                      <TableColumn fx:id="quantityColumn" maxWidth="130.0" minWidth="-Infinity" prefWidth="130.0" text="Quantité" />
                     </columns>
                   </TableView>
-                  <Button id="quit" fx:id="quit" layoutX="227.0" layoutY="337.0" mnemonicParsing="false" onAction="#cancel" text="Retour" />
+                  <Button id="quit" fx:id="quit" layoutX="227.0" layoutY="329.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="85.0" text="Retour" />
                </children>
             </AnchorPane>
         </items>

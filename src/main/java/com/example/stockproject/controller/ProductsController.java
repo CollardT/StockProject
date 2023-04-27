@@ -8,6 +8,7 @@ import com.example.stockproject.dao.implement.ProduitDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Produit;
 import com.example.stockproject.models.Utilisateur;
+import com.example.stockproject.utilities.CreateAlert;
 import com.example.stockproject.utilities.CreateScene;
 
 import interfaces.ControllerInterface;
@@ -15,8 +16,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -51,7 +50,6 @@ public class ProductsController implements ControllerInterface {
 	 */
 	@FXML
 	private void initialize() {
-		// Initialize la table des produits
 		nameColumn.setCellValueFactory(cellData -> cellData.getValue().nomProperty());
 		ProductTable.setItems(FXCollections.observableList(products));
 
@@ -68,12 +66,10 @@ public class ProductsController implements ControllerInterface {
 	 */
 	private void showProductDetails(Produit product) {
 		if (product != null) {
-			// Fill the labels with info from the Product object.
 			nameLabel.setText(product.get_nom());
 			stockLabel.setText(Integer.toString(product.get_stock()));
 			isActiveCheckBox.setSelected(product.get_isActive());
 		} else {
-			// Product is null, remove all the text.
 			nameLabel.setText("");
 			stockLabel.setText("");
 			isActiveCheckBox.setSelected(false);
@@ -90,28 +86,20 @@ public class ProductsController implements ControllerInterface {
 	private void addProduct() {
 		Produit newproduct = null;
 		try {
-			// Load the fxml file and create a new stage for the popup dialog.
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("productEdit.fxml"));
 			AnchorPane addProduct = (AnchorPane) loader.load();
-
 			String css = Main.class.getResource("CSS/generalCSS.css").toExternalForm();
 			addProduct.getStylesheets().add(css);
 			String css2 = Main.class.getResource("CSS/productEdit.css").toExternalForm();
 			addProduct.getStylesheets().add(css2);
-
-			// Create the dialog Stage.
 			Stage editWindow = new Stage();
 			editWindow.setTitle("Création product");
 			editWindow.initModality(Modality.WINDOW_MODAL);
 			editWindow.initOwner(newProductWindow.getScene().getWindow());
 			Scene scene = new Scene(addProduct);
 			editWindow.setScene(scene);
-
-			// Set the person into the controller.
 			ProductEditController controller = loader.getController();
 			controller.setProduct(newproduct);
-
-			// Show the dialog and wait until the user closes it
 			editWindow.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -123,45 +111,32 @@ public class ProductsController implements ControllerInterface {
 		Produit selectedProduct = ProductTable.getSelectionModel().getSelectedItem();
 		if (selectedProduct != null) {
 			try {
-				// Load the fxml file and create a new stage for the popup dialog.
 				FXMLLoader loader = new FXMLLoader(Main.class.getResource("ProductEdit.fxml"));
 				AnchorPane editProduct = (AnchorPane) loader.load();
-
 				String css = Main.class.getResource("CSS/generalCSS.css").toExternalForm();
 				editProduct.getStylesheets().add(css);
 				String css2 = Main.class.getResource("CSS/productEdit.css").toExternalForm();
 				editProduct.getStylesheets().add(css2);
-
-				// Create the dialog Stage.
 				Stage editWindow = new Stage();
 				editWindow.setTitle("Edit Product");
 				editWindow.initModality(Modality.WINDOW_MODAL);
 				editWindow.initOwner(edit.getScene().getWindow());
 				Scene scene = new Scene(editProduct);
 				editWindow.setScene(scene);
-
-				// Set the Product into the controller.
 				ProductEditController controller = loader.getController();
 				controller.setProduct(selectedProduct);
-
-				// Show the dialog and wait until the user closes it
 				editWindow.showAndWait();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("No Selection");
-			alert.setHeaderText("Pas de produit séléctionné");
-			alert.setContentText("Merci de sélectionner un produit dans la table.");
-			alert.showAndWait();
+			CreateAlert.createAlert("WARNING", "No Selection", "Pas de produit séléctionné",
+					"Merci de sélectionner un produit dans la table");
 		}
 	}
 
 	@FXML
 	private void cancel() {
-
 		ControllerInterface ctrl = new HomeController();
 		CreateScene.createNewScene("Home", quit, "home", ctrl, user);
 	}

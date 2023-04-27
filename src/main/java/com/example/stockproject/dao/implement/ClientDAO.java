@@ -136,10 +136,10 @@ public class ClientDAO extends DAO<Client> {
 		Client client = null;
 		try {
 			conn.setAutoCommit(false);
-			PreparedStatement state = conn.prepareStatement("SELECT * FROM client c WHERE c.nom=?");
+			PreparedStatement state = conn.prepareStatement("SELECT * FROM client WHERE nom=?");
 			state.setString(1, name);
 			ResultSet result = state.executeQuery();
-			if (result.first()) {
+			if (result.next()) {
 				client = new Client(result.getInt("id_client"), result.getString("nom"), result.getString("NISS"),
 						result.getString("email"), result.getString("adresse"), result.getBoolean("isActive"));
 			}
@@ -147,7 +147,7 @@ public class ClientDAO extends DAO<Client> {
 			conn.setAutoCommit(true);
 			return client;
 		} catch (SQLException e) {
-			System.out.println("Probleme de récupération du client avec le nom:" + name);
+			System.out.println("Probleme de récupération du client avec le nom : " + name);
 			return null;
 		}
 
