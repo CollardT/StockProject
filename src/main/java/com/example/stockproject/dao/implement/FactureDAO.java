@@ -45,23 +45,29 @@ public class FactureDAO extends DAO<Facture> {
                 ResultSet genkeys = ps.getGeneratedKeys();
                 if (genkeys.next()) {
                    int id_facture = genkeys.getInt(1);
-                    obj.get_produitQuantite().forEach(entry -> {
+                   obj.get_produitQuantite().forEach(entry -> {
                         try {
-
-                            PreparedStatement ps2 = conn.prepareStatement("INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
-                            ps2.setInt(1, id_facture);
-                            ps2.setInt(2, entry.getProduit().get_idproduit());
-                            ps2.setInt(3, entry.getQuantite());
-                            ps2.executeUpdate();
-                            ps2.close();
-                            PreparedStatement ps3 = conn.prepareStatement("UPDATE produit SET stock = stock - ? WHERE id_produit =?;");
-                            ps3.setInt(1, entry.getQuantite());
-                            ps3.setInt(2, entry.getProduit().get_idproduit());
-                            ps3.executeUpdate();
-
+                            // Check de la quantite de stock avant d'appliquer celle-ci à la base de données
+                            if(this.produitDAO.find(entry.getProduit().get_idproduit()).get_stock() > entry.getQuantite()) {
+                                PreparedStatement ps2 = conn.prepareStatement("INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
+                                ps2.setInt(1, id_facture);
+                                ps2.setInt(2, entry.getProduit().get_idproduit());
+                                ps2.setInt(3, entry.getQuantite());
+                                ps2.executeUpdate();
+                                ps2.close();
+                                PreparedStatement ps3 = conn.prepareStatement("UPDATE produit SET stock = stock - ? WHERE id_produit =?;");
+                                ps3.setInt(1, entry.getQuantite());
+                                ps3.setInt(2, entry.getProduit().get_idproduit());
+                                ps3.executeUpdate();
+                                ps3.close();
+                            }
+                            else {
+                                throw new Exception("Pas assez de stock de l'article"+entry.getProduit().get_idproduit());
+                            }
                         }
                         catch (Exception e) {
                             e.printStackTrace();
+                            return;
                         }
                     });
                 }
@@ -252,6 +258,5 @@ public class FactureDAO extends DAO<Facture> {
             return null;
         }
     }
-
 
 }
