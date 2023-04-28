@@ -62,8 +62,8 @@ public class BillsController implements ControllerInterface {
 	private void delete() {
 		Facture selectedBill = BillTable.getSelectionModel().getSelectedItem();
 		if (selectedBill != null) {
-			ProductQuantityTable.getItems().clear();
 			factureDAO.delete(selectedBill);
+			ProductQuantityTable.getItems().clear();
 			factures = factureDAO.findall();
 			BillTable.setItems(FXCollections.observableList(factures));
 			CreateAlert.createAlert("INFORMATION", "Suppression facture", "Facture suprimée", null);

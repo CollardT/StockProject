@@ -46,13 +46,28 @@ public class Facture {
 		this._client = _client;
 		this._utilisateur = _utilisateur;
 		this._produitQuantite = _produitQuantite;
-		this._nameFacture = "Test";
+		this._nameFacture = "";
 
 		_idFactureProperty = new SimpleIntegerProperty(_idFacture);
 		_clientProperty = new SimpleObjectProperty<>(_client);
 		_utilisateurProperty = new SimpleObjectProperty<>(_utilisateur);
 		_produitQuantiteProperty = new SimpleListProperty<>(FXCollections.observableList(_produitQuantite));
 		_nameFactureProperty = new SimpleStringProperty("Test");
+	}
+
+	public Facture(int _idFacture, Client _client, Utilisateur _utilisateur, String _name,
+			List<ProduitQuantite> _produitQuantite) {
+		this._idFacture = _idFacture;
+		this._client = _client;
+		this._utilisateur = _utilisateur;
+		this._produitQuantite = _produitQuantite;
+		this._nameFacture = _name;
+
+		_idFactureProperty = new SimpleIntegerProperty(_idFacture);
+		_clientProperty = new SimpleObjectProperty<>(_client);
+		_utilisateurProperty = new SimpleObjectProperty<>(_utilisateur);
+		_produitQuantiteProperty = new SimpleListProperty<>(FXCollections.observableList(_produitQuantite));
+		_nameFactureProperty = new SimpleStringProperty(_name);
 	}
 
 	public String get_nameFacture() {

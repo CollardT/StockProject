@@ -12,6 +12,7 @@ import com.example.stockproject.models.Produit;
 import com.example.stockproject.models.ProduitQuantite;
 import com.example.stockproject.models.Utilisateur;
 import com.example.stockproject.utilities.CreateAlert;
+import com.example.stockproject.utilities.CreateNewDate;
 import com.example.stockproject.utilities.CreateScene;
 import com.example.stockproject.utilities.IsANumber;
 
@@ -173,6 +174,8 @@ public class NewBillController implements ControllerInterface {
 			this.facture.set_client(selectedClient);
 			this.facture.set_produitQuantite(facture.get_produitQuantite());
 			this.facture.set_utilisateur(user);
+			this.facture.set_nameFacture(selectedClient.get_idClient() + "-" + selectedClient.get_nom().substring(0, 3)
+					+ "-" + CreateNewDate.createNewDate());
 			billDAO.create(this.facture);
 			CreateAlert.createAlert("INFORMATION", "Facture encodée", "La facture à bien été crée", null);
 			ClientsList.getSelectionModel().clearSelection();
@@ -180,7 +183,6 @@ public class NewBillController implements ControllerInterface {
 			QuantityLabel.setText("");
 			facture.get_produitQuantite().clear();
 			BillsTable.setItems(FXCollections.observableList(facture.get_produitQuantite()));
-
 		}
 	}
 

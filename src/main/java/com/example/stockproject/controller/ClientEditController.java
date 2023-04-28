@@ -23,8 +23,9 @@ public class ClientEditController {
 	@FXML
 	private Button confirm, quit;
 
-	// Regex vérifiant la présence de lettre ou d'espaces
-	private String nomRegex = "[a-zA-Z ']*";
+	// Regex vérifiant la présence de lettre ou d'espaces et Oblige d'avoir au moins
+	// 3 lettres
+	private String nomRegex = "[a-zA-Z ']{3,}";
 
 	// Regex Vérifiant la présence de nombre 11 fois
 	private String NISSRegex = "[0-9]{11}";
