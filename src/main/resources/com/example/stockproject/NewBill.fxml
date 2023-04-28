@@ -60,8 +60,8 @@
           <TableColumn fx:id="quantityColumn" prefWidth="100.0" text="Quantité" />
         </columns>
       </TableView>
-      <Button fx:id="confirm" layoutX="351.0" layoutY="325.0" mnemonicParsing="false" onAction="#createBill" prefHeight="35.0" prefWidth="85.0" text="Confirmer" />
+      <Button layoutX="351.0" layoutY="325.0" mnemonicParsing="false" onAction="#createBill" prefHeight="35.0" prefWidth="85.0" text="Confirmer" />
       <Button fx:id="quit" layoutX="467.0" layoutY="325.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="85.0" text="Annuler" />
-      <Button fx:id="addProduct" layoutX="147.0" layoutY="325.0" mnemonicParsing="false" onAction="#addToBill" prefHeight="35.0" prefWidth="85.0" text="Ajouter" />
+      <Button layoutX="147.0" layoutY="325.0" mnemonicParsing="false" onAction="#addToBill" prefHeight="35.0" prefWidth="85.0" text="Ajouter" />
    </children>
 </AnchorPane>

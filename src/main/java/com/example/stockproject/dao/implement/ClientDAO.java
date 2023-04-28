@@ -59,7 +59,8 @@ public class ClientDAO extends DAO<Client> {
 		try {
 			if (checkforclient(obj)) {
 				conn.setAutoCommit(false);
-				PreparedStatement state = conn.prepareStatement("UPDATE client isActive=? WHERE client.id_client = ?");
+				PreparedStatement state = conn
+						.prepareStatement("UPDATE client SET isActive=? WHERE client.id_client = ?");
 				state.setBoolean(1, false);
 				state.setInt(2, obj.get_idClient());
 				state.executeUpdate();
@@ -71,7 +72,6 @@ public class ClientDAO extends DAO<Client> {
 				state.executeUpdate();
 				state.close();
 			}
-
 			conn.commit();
 			conn.setAutoCommit(true);
 			return true;
@@ -178,7 +178,7 @@ public class ClientDAO extends DAO<Client> {
 		List<Client> clients = new ArrayList<>();
 		try {
 			conn.setAutoCommit(false);
-			PreparedStatement state = conn.prepareStatement("SELECT * FROM client c Where isActive=1");
+			PreparedStatement state = conn.prepareStatement("SELECT * FROM client");
 			ResultSet list = state.executeQuery();
 			while (list.next()) {
 				clients.add(new Client(list.getInt("id_client"), list.getString("nom"), list.getString("NISS"),

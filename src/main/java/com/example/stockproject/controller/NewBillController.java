@@ -38,7 +38,7 @@ public class NewBillController implements ControllerInterface {
 	@FXML
 	private TextField QuantityLabel;
 	@FXML
-	private Button addProduct, confirm, quit;
+	private Button quit;
 	@FXML
 	private ComboBox ClientsList, ProductsList;
 

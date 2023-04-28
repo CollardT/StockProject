@@ -37,10 +37,10 @@ public class ClientsController implements ControllerInterface {
 	@FXML
 	private CheckBox isActiveCheckBox;
 	@FXML
-	private Button reload, newClientWindow, edit, quit;
+	private Button newClientWindow, edit, quit;
 
-	private ClientDAO clientsDAO = (ClientDAO) DAOFactory.getClientDao();
-	private List<Client> clients = clientsDAO.findall();
+	private ClientDAO clientDAO = (ClientDAO) DAOFactory.getClientDao();
+	private List<Client> clients = clientDAO.findallactive();
 	private Utilisateur user;
 
 	/**
@@ -76,12 +76,14 @@ public class ClientsController implements ControllerInterface {
 		}
 	}
 
-	/*
-	 * Refresh la liste des clients
-	 */
 	@FXML
-	public void refresh() {
-		clients = clientsDAO.findall();
+	public void showActiv() {
+		refresh();
+	}
+
+	@FXML
+	public void showAll() {
+		clients = clientDAO.findall();
 		ClientTable.setItems(FXCollections.observableList(clients));
 	}
 
@@ -98,16 +100,15 @@ public class ClientsController implements ControllerInterface {
 			addClient.getStylesheets().add(css);
 			String css2 = Main.class.getResource("CSS/clientEdit.css").toExternalForm();
 			addClient.getStylesheets().add(css2);
-
 			Stage editWindow = new Stage();
 			editWindow.setTitle("Création Client");
 			editWindow.initModality(Modality.WINDOW_MODAL);
 			editWindow.initOwner(newClientWindow.getScene().getWindow());
 			Scene scene = new Scene(addClient);
 			editWindow.setScene(scene);
-
 			ClientEditController controller = loader.getController();
 			controller.setClient(newClient);
+			controller.setParentControlleur(this);
 
 			editWindow.showAndWait();
 		} catch (IOException e) {
@@ -126,22 +127,19 @@ public class ClientsController implements ControllerInterface {
 			try {
 				FXMLLoader loader = new FXMLLoader(Main.class.getResource("ClientEdit.fxml"));
 				AnchorPane editClient = (AnchorPane) loader.load();
-
 				String css = Main.class.getResource("CSS/generalCSS.css").toExternalForm();
 				editClient.getStylesheets().add(css);
 				String css2 = Main.class.getResource("CSS/clientEdit.css").toExternalForm();
 				editClient.getStylesheets().add(css2);
-
 				Stage editWindow = new Stage();
 				editWindow.setTitle("Edit Client");
 				editWindow.initModality(Modality.WINDOW_MODAL);
 				editWindow.initOwner(edit.getScene().getWindow());
 				Scene scene = new Scene(editClient);
 				editWindow.setScene(scene);
-
 				ClientEditController controller = loader.getController();
 				controller.setClient(selectedPerson);
-
+				controller.setParentControlleur(this);
 				editWindow.showAndWait();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -150,6 +148,28 @@ public class ClientsController implements ControllerInterface {
 			CreateAlert.createAlert("ERROR", "Empty client", "Pas de client séléctionné",
 					"Merci de sélectionner un client dans la table.");
 		}
+	}
+
+	@FXML
+	private void delete() {
+		Client selectedPerson = ClientTable.getSelectionModel().getSelectedItem();
+		if (selectedPerson != null) {
+			clientDAO.delete(selectedPerson);
+			refresh();
+			CreateAlert.createAlert("INFORMATION", "Suppression client", "Client suprimé", null);
+		} else {
+			CreateAlert.createAlert("ERROR", "Empty client", "Pas de client séléctionné",
+					"Merci de sélectionner un client dans la table.");
+		}
+	}
+
+	/*
+	 * Refresh la liste des clients
+	 */
+	@FXML
+	public void refresh() {
+		clients = clientDAO.findallactive();
+		ClientTable.setItems(FXCollections.observableList(clients));
 	}
 
 	/**

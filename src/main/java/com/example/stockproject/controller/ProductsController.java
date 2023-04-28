@@ -38,10 +38,10 @@ public class ProductsController implements ControllerInterface {
 	@FXML
 	private CheckBox isActiveCheckBox;
 	@FXML
-	private Button reload, newProductWindow, edit, quit;
+	private Button newProductWindow, edit, quit;
 
-	private ProduitDAO productsDAO = (ProduitDAO) DAOFactory.getProduitDao();
-	private List<Produit> products = productsDAO.findall();
+	private ProduitDAO productDAO = (ProduitDAO) DAOFactory.getProduitDao();
+	private List<Produit> products = productDAO.findallActive();
 	private Utilisateur user;
 
 	/**
@@ -77,8 +77,13 @@ public class ProductsController implements ControllerInterface {
 	}
 
 	@FXML
-	private void refresh() {
-		products = productsDAO.findall();
+	public void showActiv() {
+		refresh();
+	}
+
+	@FXML
+	public void showAll() {
+		products = productDAO.findall();
 		ProductTable.setItems(FXCollections.observableList(products));
 	}
 
@@ -93,13 +98,14 @@ public class ProductsController implements ControllerInterface {
 			String css2 = Main.class.getResource("CSS/productEdit.css").toExternalForm();
 			addProduct.getStylesheets().add(css2);
 			Stage editWindow = new Stage();
-			editWindow.setTitle("Création product");
+			editWindow.setTitle("Création nouveau produit");
 			editWindow.initModality(Modality.WINDOW_MODAL);
 			editWindow.initOwner(newProductWindow.getScene().getWindow());
 			Scene scene = new Scene(addProduct);
 			editWindow.setScene(scene);
 			ProductEditController controller = loader.getController();
 			controller.setProduct(newproduct);
+			controller.setParentControlleur(this);
 			editWindow.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -118,13 +124,14 @@ public class ProductsController implements ControllerInterface {
 				String css2 = Main.class.getResource("CSS/productEdit.css").toExternalForm();
 				editProduct.getStylesheets().add(css2);
 				Stage editWindow = new Stage();
-				editWindow.setTitle("Edit Product");
+				editWindow.setTitle("Modification produit");
 				editWindow.initModality(Modality.WINDOW_MODAL);
 				editWindow.initOwner(edit.getScene().getWindow());
 				Scene scene = new Scene(editProduct);
 				editWindow.setScene(scene);
 				ProductEditController controller = loader.getController();
 				controller.setProduct(selectedProduct);
+				controller.setParentControlleur(this);
 				editWindow.showAndWait();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -136,9 +143,28 @@ public class ProductsController implements ControllerInterface {
 	}
 
 	@FXML
+	private void delete() {
+		Produit selectedProduct = ProductTable.getSelectionModel().getSelectedItem();
+		if (selectedProduct != null) {
+			productDAO.delete(selectedProduct);
+			refresh();
+			CreateAlert.createAlert("INFORMATION", "Suppression produit", "Prdouit suprimé", null);
+		} else {
+			CreateAlert.createAlert("ERROR", "Empty product", "Pas de produit séléctionné",
+					"Merci de sélectionner un produit dans la table.");
+		}
+	}
+
+	@FXML
 	private void cancel() {
 		ControllerInterface ctrl = new HomeController();
 		CreateScene.createNewScene("Home", quit, "home", ctrl, user);
+	}
+
+	@FXML
+	public void refresh() {
+		products = productDAO.findallActive();
+		ProductTable.setItems(FXCollections.observableList(products));
 	}
 
 	public void setUser(Utilisateur user) {

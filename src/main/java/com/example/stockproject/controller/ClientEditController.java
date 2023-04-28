@@ -5,17 +5,15 @@ import java.io.IOException;
 import com.example.stockproject.dao.implement.ClientDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Client;
-import com.example.stockproject.models.Utilisateur;
 import com.example.stockproject.utilities.CreateAlert;
 
-import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ClientEditController implements ControllerInterface {
+public class ClientEditController {
 
 	// Déclaration des éléments FXML lié au controlleur
 	@FXML
@@ -36,8 +34,8 @@ public class ClientEditController implements ControllerInterface {
 	private String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$";
 
 	private Client client;
+	private ClientsController ctrl;
 	private ClientDAO clientDAO = (ClientDAO) DAOFactory.getClientDao();
-	private Utilisateur user;
 
 	/**
 	 * Lie le client qui doit être édité/créé. Si celui-ci est null, remet les
@@ -83,7 +81,7 @@ public class ClientEditController implements ControllerInterface {
 			} else {
 				clientDAO.create(this.client);
 			}
-
+			ctrl.refresh();
 			Stage thisWindow = (Stage) confirm.getScene().getWindow();
 			thisWindow.close();
 		}
@@ -133,7 +131,8 @@ public class ClientEditController implements ControllerInterface {
 		thisWindow.close();
 	}
 
-	public void setUser(Utilisateur user) {
-		this.user = user;
+	public void setParentControlleur(ClientsController ctrl) {
+		this.ctrl = ctrl;
 	}
+
 }

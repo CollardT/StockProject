@@ -3,18 +3,16 @@ package com.example.stockproject.controller;
 import com.example.stockproject.dao.implement.ProduitDAO;
 import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Produit;
-import com.example.stockproject.models.Utilisateur;
 import com.example.stockproject.utilities.CreateAlert;
 import com.example.stockproject.utilities.IsANumber;
 
-import interfaces.ControllerInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ProductEditController implements ControllerInterface {
+public class ProductEditController {
 	@FXML
 	private TextField nameLabel;
 	@FXML
@@ -25,8 +23,8 @@ public class ProductEditController implements ControllerInterface {
 	private Button confirm, quit;
 
 	private Produit product;
+	private ProductsController ctrl;
 	private ProduitDAO productDAO = (ProduitDAO) DAOFactory.getProduitDao();
-	private Utilisateur user;
 
 	/**
 	 * Sets the product to be edited in the dialog.
@@ -59,6 +57,7 @@ public class ProductEditController implements ControllerInterface {
 			} else {
 				productDAO.create(this.product);
 			}
+			ctrl.refresh();
 			Stage thisWindow = (Stage) confirm.getScene().getWindow();
 			thisWindow.close();
 
@@ -93,7 +92,8 @@ public class ProductEditController implements ControllerInterface {
 		thisWindow.close();
 	}
 
-	public void setUser(Utilisateur user) {
-		this.user = user;
+	public void setParentControlleur(ProductsController ctrl) {
+		this.ctrl = ctrl;
 	}
+
 }

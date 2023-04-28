@@ -19,10 +19,6 @@
 	-fx-background-color : #955628;
 }
 
-#reload {
-	-fx-background-color: #EF9B0F;
-}
-
 .gridLabel {
 	-fx-background-color: rgba(107,107,107,0.4);
 	-fx-border-style: solid inside;

@@ -152,6 +152,26 @@ public class ProduitDAO extends DAO<Produit> {
 		List<Produit> produits;
 		try {
 			conn.setAutoCommit(false);
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit");
+			ResultSet rs = ps.executeQuery();
+			produits = new ArrayList<>();
+			while (rs.next()) {
+				produits.add(new Produit(rs.getInt("id_produit"), rs.getString("nom"), rs.getInt("stock"),
+						rs.getBoolean("isActive")));
+			}
+			conn.commit();
+			conn.setAutoCommit(true);
+			return produits;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public List<Produit> findallActive() {
+		List<Produit> produits;
+		try {
+			conn.setAutoCommit(false);
 			PreparedStatement ps = conn.prepareStatement("SELECT * FROM produit WHERE isActive = 1");
 			ResultSet rs = ps.executeQuery();
 			produits = new ArrayList<>();

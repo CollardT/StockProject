@@ -35,7 +35,8 @@
                       <TableColumn fx:id="quantityColumn" maxWidth="130.0" minWidth="-Infinity" prefWidth="130.0" text="Quantité" />
                     </columns>
                   </TableView>
-                  <Button id="quit" fx:id="quit" layoutX="227.0" layoutY="329.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="85.0" text="Retour" />
+                  <Button id="quit" fx:id="quit" layoutX="230.0" layoutY="330.0" mnemonicParsing="false" onAction="#cancel" prefHeight="35.0" prefWidth="85.0" text="Retour" />
+                  <Button layoutX="110.0" layoutY="330.0" mnemonicParsing="false" onAction="#delete" prefHeight="35.0" prefWidth="85.0" text="Supprimer" />
                </children>
             </AnchorPane>
         </items>

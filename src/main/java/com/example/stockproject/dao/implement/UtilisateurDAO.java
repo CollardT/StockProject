@@ -24,11 +24,12 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	public boolean create(Utilisateur obj) {
 		try {
 			conn.setAutoCommit(false);
-			PreparedStatement ps = conn
-					.prepareStatement("INSERT INTO utilisateur (login, password, permissions) VALUES (?,?,?)");
+			PreparedStatement ps = conn.prepareStatement(
+					"INSERT INTO utilisateur (login, password, permissions, isActive) VALUES (?,?,?,?)");
 			ps.setString(1, obj.get_login());
 			ps.setString(2, obj.get_password());
 			ps.setString(3, obj.get_role());
+			ps.setBoolean(4, true);
 			ps.executeUpdate();
 			ps.close();
 			conn.commit();
@@ -88,12 +89,13 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 	public boolean update(Utilisateur obj) {
 		try {
 			conn.setAutoCommit(false);
-			PreparedStatement ps = conn
-					.prepareStatement("UPDATE utilisateur SET login =?, password =?, permissions =? WHERE id =?");
+			PreparedStatement ps = conn.prepareStatement(
+					"UPDATE utilisateur SET login =?, password =?, permissions =?, isActive =? WHERE id =?");
 			ps.setString(1, obj.get_login());
 			ps.setString(2, obj.get_password());
 			ps.setString(3, obj.get_role());
 			ps.setInt(4, obj.get_idUtilisateur());
+			ps.setBoolean(5, obj.get_isActive());
 			ps.executeUpdate();
 			ps.close();
 			conn.commit();
@@ -123,7 +125,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur(rs.getInt("id_utilisateur"), rs.getString("login"),
-						rs.getString("password"), rs.getString("permissions"));
+						rs.getString("password"), rs.getString("permissions"), rs.getBoolean("isActive"));
 				conn.commit();
 				conn.setAutoCommit(true);
 				return utilisateur;
@@ -154,7 +156,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				utilisateur = new Utilisateur(rs.getInt("id_utilisateur"), rs.getString("login"),
-						rs.getString("password"), rs.getString("permissions"));
+						rs.getString("password"), rs.getString("permissions"), rs.getBoolean("isActive"));
 				conn.commit();
 				conn.setAutoCommit(true);
 				return utilisateur;
@@ -184,7 +186,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
 			List<Utilisateur> utilisateurs = new java.util.ArrayList<>();
 			while (rs.next()) {
 				Utilisateur utilisateur = new Utilisateur(rs.getInt("id"), rs.getString("login"),
-						rs.getString("password"), rs.getString("role"));
+						rs.getString("password"), rs.getString("role"), rs.getBoolean("isActive"));
 				utilisateurs.add(utilisateur);
 			}
 			conn.commit();

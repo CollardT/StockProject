@@ -1,6 +1,8 @@
 package com.example.stockproject.models;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,10 +12,12 @@ public class Utilisateur {
 	// Déclaration des paramètres de la classe
 	private int _idUtilisateur;
 	private String _login, _password;
+	private boolean _isActive;
 
 	// Déclaration des paramètres de la classe pour utilisation JAVAFX
 	private IntegerProperty _idUtilisateurProperty;
 	private StringProperty _loginProperty, _passwordProperty;
+	private BooleanProperty _isActiveProperty;
 
 	private enum permissions {
 		SELLER, MANAGER, ADMIN
@@ -34,15 +38,17 @@ public class Utilisateur {
 		this._role = setpermissions("SELLER");
 	}
 
-	public Utilisateur(int _idUtilisateur, String _login, String _password, String _role) {
+	public Utilisateur(int _idUtilisateur, String _login, String _password, String _role, boolean _isActive) {
 		this._idUtilisateur = _idUtilisateur;
 		this._login = _login;
 		this._password = _password;
+		this._isActive = _isActive;
 
 		this._idUtilisateurProperty = new SimpleIntegerProperty(_idUtilisateur);
 		this._loginProperty = new SimpleStringProperty(_login);
 		this._passwordProperty = new SimpleStringProperty(_password);
 		this._role = setpermissions(_role);
+		this._isActiveProperty = new SimpleBooleanProperty(_isActive);
 	}
 
 	/**
@@ -125,5 +131,25 @@ public class Utilisateur {
 
 	public StringProperty passwordProperty() {
 		return _passwordProperty;
+	}
+
+	public boolean get_isActive() {
+		return _isActive;
+	}
+
+	public void set_isActive(boolean _isActive) {
+		this._isActive = _isActive;
+	}
+
+	public boolean get_isActiveProperty() {
+		return _isActiveProperty.get();
+	}
+
+	public void set_isActiveProperty(boolean _isActive) {
+		this._isActiveProperty.set(_isActive);
+	}
+
+	public BooleanProperty isActiveProperty() {
+		return _isActiveProperty;
 	}
 }

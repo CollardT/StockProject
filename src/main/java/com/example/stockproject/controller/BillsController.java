@@ -7,6 +7,7 @@ import com.example.stockproject.factory.DAOFactory;
 import com.example.stockproject.models.Facture;
 import com.example.stockproject.models.ProduitQuantite;
 import com.example.stockproject.models.Utilisateur;
+import com.example.stockproject.utilities.CreateAlert;
 import com.example.stockproject.utilities.CreateScene;
 
 import interfaces.ControllerInterface;
@@ -31,8 +32,8 @@ public class BillsController implements ControllerInterface {
 	@FXML
 	private Button quit;
 
-	private FactureDAO facturesDAO = (FactureDAO) DAOFactory.getFactureDao();
-	private List<Facture> factures = facturesDAO.findall();
+	private FactureDAO factureDAO = (FactureDAO) DAOFactory.getFactureDao();
+	private List<Facture> factures = factureDAO.findall();
 
 	private Utilisateur user;
 
@@ -52,7 +53,24 @@ public class BillsController implements ControllerInterface {
 	private void showBillDetails(Facture facture) {
 		productsColumn.setCellValueFactory(cellData -> cellData.getValue().getProduitProperty().nomProperty());
 		quantityColumn.setCellValueFactory(cellData -> cellData.getValue().quantiteProperty());
-		ProductQuantityTable.setItems(FXCollections.observableList(facture.get_produitQuantite()));
+		if (facture != null) {
+			ProductQuantityTable.setItems(FXCollections.observableList(facture.get_produitQuantite()));
+		}
+	}
+
+	@FXML
+	private void delete() {
+		Facture selectedBill = BillTable.getSelectionModel().getSelectedItem();
+		if (selectedBill != null) {
+			ProductQuantityTable.getItems().clear();
+			factureDAO.delete(selectedBill);
+			factures = factureDAO.findall();
+			BillTable.setItems(FXCollections.observableList(factures));
+			CreateAlert.createAlert("INFORMATION", "Suppression facture", "Facture suprimée", null);
+		} else {
+			CreateAlert.createAlert("ERROR", "Empty Bill", "Pas de facture séléctionné",
+					"Merci de sélectionner un facture dans la table.");
+		}
 	}
 
 	/**

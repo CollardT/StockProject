@@ -9,6 +9,7 @@
 #ProductQuantityTable .table-row-cell:odd {
 	-fx-background-color: #9ECB91;
 }
+
 #mainPane {
 	-fx-background-color: #bbb;
 }

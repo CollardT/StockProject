@@ -117,7 +117,7 @@ public class FactureDAO extends DAO<Facture> {
 				}
 			}
 			conn.setAutoCommit(false);
-			PreparedStatement psdfp = conn.prepareStatement("DELETE FROM produit_facture WHERE id_produit = ?");
+			PreparedStatement psdfp = conn.prepareStatement("DELETE FROM produit_facture WHERE id_facture = ?");
 			psdfp.setInt(1, obj.get_idFacture());
 			psdfp.executeUpdate();
 			psdfp.close();
