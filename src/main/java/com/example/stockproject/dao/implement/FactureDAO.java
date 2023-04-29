@@ -57,6 +57,7 @@ public class FactureDAO extends DAO<Facture> {
 							// Check de la quantite de stock avant d'appliquer celle-ci à la base de données
 							if (this.produitDAO.find(entry.getProduit().get_idProduit()).get_stock() >= entry
 									.getQuantite()) {
+								conn.setAutoCommit(false);
 								PreparedStatement ps2 = conn.prepareStatement(
 										"INSERT INTO produit_facture(id_facture,id_produit,quant) VALUES (?,?,?);");
 								ps2.setInt(1, id_facture);
